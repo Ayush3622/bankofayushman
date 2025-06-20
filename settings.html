@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyBank - Settings</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom font for Inter, falling back to sans-serif */
@@ -117,88 +116,29 @@
         html.dark .text-gray-800 {
             color: #f3f4f6; /* Lighter gray for headings */
         }
-
-        /* Toggle switch styling */
-        .toggle-switch-container {
-            display: inline-block;
-            height: 24px;
-            position: relative;
-            width: 48px;
-        }
-
-        .toggle-switch-container input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-        html.dark .toggle-slider {
-            background-color: #555; /* Darker background for toggle slider in dark mode */
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: #2196F3;
-        }
-
-        input:focus + .toggle-slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
 
-    <!-- Main Content Area - Full width -->
-   <div class="flex-1 flex flex-col w-full overflow-hidden">
-  <!-- Top Bar -->
-  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+ <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
     
-    <!-- Left Section: Back button -->
     <div class="order-1 sm:order-none">
       <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
-        <!-- Icon only on small screens -->
         <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
         </svg>
-        <!-- Text + icon on larger screens -->
         <div class="hidden sm:flex items-center font-medium">
           <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
           </svg>
-           Dashboard
+            Dashboard
         </div>
       </a>
     </div>
 
-    <!-- Center Section: Title and Greeting -->
     <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
       <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
         Settings
@@ -206,7 +146,6 @@
       
     </div>
 
-    <!-- Right Section: Notification Icon -->
     <div class="order-3">
       <a href="recentalerts.html">
   <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
@@ -222,12 +161,10 @@
 
 
 
-        <!-- Main Content Scroll Area -->
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 p-6 main-content-area">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Personalize Your Experience</h2>
 
-                <!-- General Settings -->
                 <div class="settings-card">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.58.353 1.258.6 2.573 1.066z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -245,12 +182,13 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                        <div class="flex items-center justify-between">
-                            <label for="darkModeToggle" class="block text-gray-700 dark:text-gray-300 text-sm font-medium">Dark Mode</label>
-                            <label class="toggle-switch-container">
-                                <input type="checkbox" id="darkModeToggle">
-                                <span class="toggle-slider"></span>
-                            </label>
+                        <div>
+                            <label for="themeSelect" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Theme</label>
+                            <select id="themeSelect" name="theme" class="select-field-style">
+                                <option value="default">System Default</option>
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                            </select>
                         </div>
                         <div>
                             <label for="language" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Language</label>
@@ -268,7 +206,6 @@
                     </div>
                 </div>
 
-                <!-- Security Settings -->
                 <div class="settings-card">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2v5a2 2 0 01-2 2h-3a2 2 0 01-2-2V9a2 2 0 012-2h3zm0 0V5a2 2 0 00-2-2h-3a2 2 0 00-2 2v2m7 14l-3-3m0 0l-3 3m3-3v3m2-14H8a2 2 0 00-2 2v9a2 2 0 002 2h7a2 2 0 002-2V9a2 2 0 00-2-2z"></path></svg>
@@ -302,7 +239,6 @@
                     </div>
                 </div>
 
-                <!-- Notification Settings -->
                 <div class="settings-card">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1m6-10V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"></path></svg>
@@ -345,7 +281,6 @@
                     </div>
                 </div>
 
-                <!-- Privacy Settings -->
                 <div class="settings-card">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z"></path></svg>
@@ -371,7 +306,6 @@
                     </div>
                 </div>
 
-                <!-- Delete Account (Optional/Advanced) -->
                 <div class="settings-card border-l-4 border-red-500">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -393,49 +327,6 @@
     </div>
 
     <script>
-        const htmlElement = document.documentElement; // Get the root html element
-        const darkModeToggle = document.getElementById('darkModeToggle');
-
-        // Function to apply or remove dark mode class and save preference
-        function applyDarkMode(isDarkMode) {
-            if (isDarkMode) {
-                htmlElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                htmlElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Initialize dark mode on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                applyDarkMode(true);
-                if (darkModeToggle) {
-                    darkModeToggle.checked = true;
-                }
-            } else if (savedTheme === 'light') {
-                applyDarkMode(false);
-                if (darkModeToggle) {
-                    darkModeToggle.checked = false;
-                }
-            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                // If no saved preference, check system preference
-                // Only apply if the dark mode toggle exists, otherwise rely on system
-                if (darkModeToggle) {
-                    applyDarkMode(true);
-                    darkModeToggle.checked = true;
-                }
-            }
-        });
-
-        // Event listener for the dark mode toggle switch
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('change', (event) => {
-                applyDarkMode(event.target.checked);
-            });
-        }
 
         // Example: Toggling 2FA (client-side visual only)
         const twoFaToggle = document.getElementById('2faToggle');
