@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MyBank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font globally using vanilla CSS, as CDN won't read tailwind.config.js for custom fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom animation keyframes for a dynamic entrance effect */
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Apply custom animations with utility classes */
+        .animate-fade-in-scale-up {
+            animation: fadeInScaleUp 0.8s ease-out forwards;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        /* Delay utility for staggered animations */
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-800 { animation-delay: 0.8s; }
+        .delay-1000 { animation-delay: 1.0s; }
+
+        /* Custom utility for the background pattern in hero section (optional, enhances design) */
+        .bg-pattern-dots {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800 antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-900">MyBank</a>
+
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Home</a></li>
+                <li><a href="personal.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Personal</a></li>
+                <li><a href="business.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Business</a></li>
+                <li><a href="about.html" class="text-blue-700 font-semibold border-b-2 border-blue-700 pb-1 transition duration-300">About</a></li>
+            </ul>
+
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="text-blue-700 hover:text-blue-800 font-semibold py-2 px-4 rounded-md transition duration-300">Login</a>
+                <a href="register.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pb-20">
+        <div class="container mx-auto px-4 md:px-6 lg:px-8">
+            <section class="mb-16 text-center py-16">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-800 mb-8 animate-fade-in-scale-up">
+                    About MyBank: Rooted in Trust, Driven by Innovation
+                </h1>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 animate-fade-in delay-200">
+                    Discover our journey, our values, and the dedicated people behind MyBank, committed to empowering your financial well-being in India and beyond.
+                </p>
+            </section>
+
+            <section class="mb-16 bg-white shadow-lg rounded-xl p-8 md:p-12 border border-gray-100 animate-fade-in delay-400">
+                <div class="md:flex md:items-center md:justify-between space-y-6 md:space-y-0 md:space-x-12">
+                    <div class="flex-shrink-0 mb-6 md:mb-0">
+                        <div class="w-48 h-48 rounded-full overflow-hidden mx-auto shadow-md border-4 border-blue-100">
+                            <img src="https://media.licdn.com/dms/image/v2/D5603AQGYfatP5ha-3g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1713337831738?e=2147483647&v=beta&t=2hUBrKQelbfJAca4my6ZJ6Ea8kU2yuh08cmm13PLHpM" alt="Ayushman Chakraborty" class="w-full h-full object-cover">
+                            </div>
+                    </div>
+                    <div class="flex-grow text-center md:text-left">
+                        <h2 class="text-3xl font-bold text-blue-700 mb-2">Ayushman Chakraborty</h2>
+                        <h3 class="text-xl text-gray-600 mb-4">Founder & CEO, MyBank</h3>
+                        <p class="text-gray-700 leading-relaxed text-lg">
+                            "My vision for MyBank was born from a deep understanding of the financial needs of our community in Kolkata. I wanted to create a bank that blends modern technology with a personal touch, a place where individuals and businesses feel truly supported in achieving their financial aspirations. From our humble beginnings, we've remained committed to integrity, innovation, and putting our customers first. I am incredibly proud of the journey we've undertaken and excited about the future of MyBank."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16 bg-gray-100 rounded-xl p-8 md:p-12 shadow-inner border border-gray-200 animate-fade-in delay-600">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Our Journey: A Legacy of Growth and Trust</h2>
+                <div class="space-y-10">
+                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 bg-white p-6 rounded-lg shadow-sm border border-blue-100">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-3xl font-bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                        <div class="flex-grow text-center md:text-left">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">2010: The Inception</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                MyBank was founded in the heart of Kolkata by Ayushman Chakraborty with a small, dedicated team. Our ambition was to redefine banking in the region, focusing on accessibility and genuine customer care for local communities.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 bg-white p-6 rounded-lg shadow-sm border border-blue-100">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-green-600 flex items-center justify-center text-white text-3xl font-bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75A2.25 2.25 0 0 0 15.75 1.5H13.5m-3 0V3m3-1.5V3m-3 18.75h3" />
+                            </svg>
+                        </div>
+                        <div class="flex-grow text-center md:text-left">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">2015: Embracing Digital Transformation</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Recognizing evolving customer needs, MyBank invested significantly in digital infrastructure, launching our intuitive online banking platform to provide greater convenience and accessibility.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 bg-white p-6 rounded-lg shadow-sm border border-blue-100">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center text-white text-3xl font-bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25a3.75 3.75 0 0 0 3.75-3.75V9h-1.5A2.25 2.25 0 0 0 9 6.75V4.5M15 14.25a3.75 3.75 0 0 1-3.75-3.75V9h1.5a2.25 2.25 0 0 1 2.25-2.25V4.5M4.5 17.25H4.5M19.5 17.25H19.5" />
+                            </svg>
+                        </div>
+                        <div class="flex-grow text-center md:text-left">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">2020: Expanding Services and Reach</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                We broadened our range to include robust business banking solutions, recognizing Kolkata's vibrant entrepreneurial spirit. This expansion marked our deeper commitment to the local economy.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 bg-white p-6 rounded-lg shadow-sm border border-blue-100">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-cyan-600 flex items-center justify-center text-white text-3xl font-bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L13.5 21.75l1.5-6h-6.75z" />
+                            </svg>
+                        </div>
+                        <div class="flex-grow text-center md:text-left">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Present: Innovation for the Future</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Today, MyBank continues to innovate, investing in cutting-edge technologies for secure, convenient, and efficient banking. We remain deeply rooted in our community, guided by Ayushman Chakraborty's vision.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16 bg-white shadow-lg rounded-xl p-8 md:p-12 border border-gray-100 animate-fade-in delay-800">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Our Guiding Principles</h2>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 mr-4 text-blue-600 text-3xl mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-2">Integrity & Trust</h3>
+                            <p class="text-gray-700 leading-relaxed">We believe in unwavering transparency and ethical practices in all our dealings, fostering deep trust with our customers and the community.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 mr-4 text-green-600 text-3xl mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-2">Customer-Centricity</h3>
+                            <p class="text-gray-700 leading-relaxed">Our customers are at the heart of everything we do. We strive to understand their unique needs and provide tailored solutions with exceptional service.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 mr-4 text-purple-600 text-3xl mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L13.5 21.75l1.5-6h-6.75Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-2">Innovation & Progress</h3>
+                            <p class="text-gray-700 leading-relaxed">We are committed to continuous improvement, embracing cutting-edge technologies to enhance our services and provide industry-leading banking solutions.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 mr-4 text-cyan-600 text-3xl mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21v-4.5m0 0V3m0 13.5A3.75 3.75 0 0 0 15.75 12H9.75a3.75 3.75 0 0 0 0 7.5h.75m-6.75-3h2.25M14.25 5.25h5.625c.556 0 1.007.452 1.007 1.008v1.125a.75.75 0 0 1-.75.75H14.25a.75.75 0 0 1-.75-.75V6.258c0-.556.452-1.007 1.008-1.007Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-2">Community Focus</h3>
+                            <p class="text-gray-700 leading-relaxed">As a Kolkata-based institution, we are deeply invested in the prosperity of our local community, actively supporting initiatives and fostering local growth.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="contact" class="py-16 bg-blue-700 text-white rounded-xl text-center shadow-lg animate-fade-in delay-1000">
+                <div class="max-w-xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-6">Connect With Us</h2>
+                    <p class="text-xl leading-relaxed mb-8 opacity-90">
+                        Have questions or want to learn more about MyBank? Our dedicated team is here to assist you.
+                    </p>
+                    <a href="mailto:info@mybank.com" class="inline-block bg-white hover:bg-gray-200 text-blue-700 font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 no-underline">
+                        Send Us an Email
+                    </a>
+                    <p class="mt-6 text-lg opacity-80">
+                        Or find us at our <a href="#" class="text-white font-bold no-underline hover:underline">Branch Locations</a> in India.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-5 mt-0 text-sm">
+        <p>&copy; 2025 MyBank. All rights reserved.</p>
+        <p class="mt-2">
+            <a href="privacypolicy.html" class="text-white hover:underline mx-2">Privacy Policy</a> |
+            <a href="termsofservice.html" class="text-white hover:underline mx-2">Terms of Service</a> |
+            <a href="contact.html" class="text-white hover:underline mx-2">Contact Us</a>
+        </p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Secure & Convenient Banking</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold text-blue-900">
+                MyBank
+            </a>
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-black hover:text-blue-700 transition-colors">Home</a>
+                <a href="personal.html" class="text-black hover:text-blue-700 transition-colors">Personal</a>
+                <a href="business.html" class="text-black hover:text-blue-700 transition-colors">Business</a>
+                <a href="about.html" class="text-black hover:text-blue-700 transition-colors">About</a>
+            </div>
+            <!-- Auth Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="login.html" class="text-black hover:text-blue-700 transition-colors">Login</a>
+                <a href="register.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300">
+                    Register
+                </a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="index.html" class="block py-2 text-black hover:text-blue-700">Home</a>
+            <a href="personal.html" class="block py-2 text-black hover:text-blue-700">Personal</a>
+            <a href="business.html" class="block py-2 text-black hover:text-blue-700">Business</a>
+            <a href="about.html" class="block py-2 text-black hover:text-blue-700">About</a>
+            <div class="border-t border-gray-200 mt-4 pt-4">
+                 <a href="login.html" class="block py-2 text-black hover:text-blue-700">Login</a>
+                <a href="register.html" class="w-full mt-2 block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md text-center">
+                    Register
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg text-white">
+            <div class="container mx-auto px-6 py-24 md:py-32 text-center">
+                <h1 class="text-4xl md:text-6xl text-white font-extrabold leading-tight mb-4">Welcome to MyBank</h1>
+                <p class="text-lg md:text-xl text-white font-extrabold mb-8 max-w-3xl mx-auto">Trusted. Secure. Convenient Banking at your fingertips.</p>
+                <a href="register.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition-transform transform hover:scale-105 duration-300">
+                    Open an Account Today
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-900">Why Choose MyBank?</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">We provide top-tier services to ensure your financial life is simple and secure.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1: Secure -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 text-center">
+                        <div class="bg-blue-100 text-blue-600 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-3">Rock-Solid Security</h3>
+                        <p class="text-gray-600">Advanced encryption, multi-factor authentication, and proactive fraud monitoring keep your account safe.</p>
+                    </div>
+
+                    <!-- Feature 2: Easy Transfers -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 text-center">
+                        <div class="bg-green-100 text-green-600 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4v3zM9.99 5L6 9l3.99 4v-3H20V8h-8.01V5z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-3">Effortless Transfers</h3>
+                        <p class="text-gray-600">Send and receive money globally in just a few clicks. Fast, simple, and with competitive rates.</p>
+                    </div>
+
+                    <!-- Feature 3: 24/7 Support -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 text-center">
+                        <div class="bg-purple-100 text-purple-600 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11c1.39 0 2.73-.26 3.99-.75A8.01 8.01 0 0 1 12 14c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.89A10.91 10.91 0 0 1 12 1zm7-1h-2v2h2V0zm-4 0h-2v2h2V0zm-4 0H9v2h2V0zM19.35 4.65l-1.42 1.42A7.95 7.95 0 0 0 12 4a8.01 8.01 0 0 0-7.93 7h2.02A5.99 5.99 0 0 1 12 6c1.66 0 3.14.69 4.22 1.78l1.42-1.42a9.96 9.96 0 0 0-5.64-2.71z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-3">24/7 Support</h3>
+                        <p class="text-gray-600">Our dedicated support team is available around the clock to assist you with any questions or concerns.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2025 MyBank. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="privacypolicy.html" class="hover:text-gray-300">Privacy Policy</a>
+                    <a href="termsofservice.html" class="hover:text-gray-300">Terms of Service</a>
+                    <a href="contact.html" class="hover:text-gray-300">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>

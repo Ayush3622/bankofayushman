@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <div class="flex justify-end mb-4">
+            <a href="index.html" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Home
+            </a>
+        </div>
+
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Login to MyBank</h2>
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email" name="email" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                       placeholder="you@example.com">
+                <p id="emailError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                       placeholder="********">
+                <p id="passwordError" class="text-red-500 text-xs mt-1 hidden">Password cannot be empty.</p>
+            </div>
+            <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Log In
+            </button>
+        </form>
+        <p class="mt-6 text-center text-sm text-gray-600">
+            Don't have an account?
+            <a href="register.html" class="font-medium text-blue-600 hover:text-blue-500">Register here</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+
+            let isValid = true;
+
+            if (!emailInput.value || !/\S+@\S+\.\S+/.test(emailInput.value)) {
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                emailError.classList.add('hidden');
+                emailInput.classList.remove('border-red-500');
+            }
+
+            if (!passwordInput.value) {
+                passwordError.classList.remove('hidden');
+                passwordInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                passwordError.classList.add('hidden');
+                passwordInput.classList.remove('border-red-500');
+            }
+
+            if (isValid) {
+                const formData = {
+                    email: emailInput.value,
+                    password: passwordInput.value
+                };
+                console.log('Login form submitted:', formData);
+
+                // *** THIS IS THE CHANGE (already there from previous interaction) ***
+                // Instead of an alert, redirect to dashboard.html
+                window.location.href = 'dashboard.html';
+
+                // In a real application, you would send this data to a backend server:
+                // fetch('/api/login', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(formData)
+                // })
+                // .then(response => {
+                //     if (response.ok) {
+                //         return response.json();
+                //     } else {
+                //         throw new Error('Login failed');
+                //     }
+                // })
+                // .then(data => {
+                //     console.log('Login successful:', data);
+                //     window.location.href = 'dashboard.html'; // Redirect on success
+                // })
+                // .catch(error => {
+                //     console.error('Login failed:', error);
+                //     // Show error message to user (e.g., a div with text)
+                // });
+            }
+        });
+    </script>
+</body>
+</html>

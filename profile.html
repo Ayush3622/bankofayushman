@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Profile</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+            flex-direction: column; /* Stack content vertically */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content Area - now the primary container -->
+     <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Profile
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-3xl mx-auto space-y-8">
+                <!-- User Profile Section -->
+                <section class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+                        <!-- Profile Picture -->
+                        <div class="flex-shrink-0">
+                            <img class="w-32 h-32 rounded-full border-4 border-blue-200 object-cover shadow-lg"
+                                 src="https://placehold.co/200x200/ffffff/000000?text=JD"
+                                 alt="User Profile Picture">
+                        </div>
+
+                        <!-- User Details -->
+                        <div class="flex-grow text-center md:text-left">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-2" id="profileNameDisplay">John Doe</h2>
+                            <p class="text-lg text-gray-600 mb-1" id="profileEmailDisplay">johndoe@example.com</p>
+                            <p class="text-md text-gray-600 mb-1" id="profilePhoneDisplay">Phone: (123) 456-7890</p>
+                            <p class="text-md text-gray-600" id="profileAddressDisplay">Address: 123 Main St, Anytown, USA 12345</p>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-8 border-gray-200">
+
+                    <!-- Edit Profile Form -->
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Edit Profile Information</h3>
+                    <form id="profileEditForm" class="space-y-6">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" value="John Doe" required
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <p id="fullNameError" class="text-red-500 text-xs mt-1 hidden">Please enter your full name.</p>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="email" id="email" name="email" value="johndoe@example.com" required
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <p id="emailError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" value="(123) 456-7890"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{10}|[0-9]{3} [0-9]{3} [0-9]{4}">
+                            <p id="phoneError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid phone number (e.g., 123-456-7890).</p>
+                        </div>
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                            <textarea id="address" name="address" rows="3"
+                                      class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">123 Main St, Anytown, USA 12345</textarea>
+                            <p id="addressError" class="text-red-500 text-xs mt-1 hidden">Please enter your address.</p>
+                        </div>
+
+                        <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all-fast">
+                            Save Changes
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Message Box (hidden by default) -->
+    <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4 text-center">
+            <h3 id="messageTitle" class="text-2xl font-bold text-gray-800 mb-4"></h3>
+            <p id="messageText" class="text-gray-700 mb-6"></p>
+            <button id="closeMessage" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all-fast">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const profileEditForm = document.getElementById('profileEditForm');
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const addressTextarea = document.getElementById('address');
+
+        const fullNameError = document.getElementById('fullNameError');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+        const addressError = document.getElementById('addressError');
+
+        const profileNameDisplay = document.getElementById('profileNameDisplay');
+        const profileEmailDisplay = document.getElementById('profileEmailDisplay');
+        const profilePhoneDisplay = document.getElementById('profilePhoneDisplay');
+        const profileAddressDisplay = document.getElementById('profileAddressDisplay');
+
+        const messageBox = document.getElementById('messageBox');
+        const messageTitle = document.getElementById('messageTitle');
+        const messageText = document.getElementById('messageText');
+        const closeMessageBtn = document.getElementById('closeMessage');
+
+        // Function to show message box
+        function showMessage(title, text, type = 'success') {
+            messageTitle.textContent = title;
+            messageText.textContent = text;
+            messageTitle.classList.remove('text-green-700', 'text-red-700'); // Clear previous colors
+            messageText.classList.remove('text-green-700', 'text-red-700');
+
+            if (type === 'success') {
+                messageTitle.classList.add('text-green-700');
+                messageText.classList.add('text-green-700');
+            } else if (type === 'error') {
+                messageTitle.classList.add('text-red-700');
+                messageText.classList.add('text-red-700');
+            }
+            messageBox.classList.remove('hidden');
+        }
+
+        // Close message box handler
+        closeMessageBtn.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+        });
+
+        // Form submission handler
+        profileEditForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Hide all error messages initially
+            [fullNameError, emailError, phoneError, addressError].forEach(el => el.classList.add('hidden'));
+
+            let isValid = true;
+
+            // Validate Full Name
+            if (!fullNameInput.value.trim()) {
+                fullNameError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+                emailError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Phone (simple check, can be enhanced with more specific regex)
+            const phoneRegex = /^(\+?\d{1,3}[\s-]?)?(\(?\d{3}\)?[\s-]?)?\d{3}[\s-]?\d{4}$/;
+            if (phoneInput.value.trim() && !phoneRegex.test(phoneInput.value.trim())) {
+                phoneError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Address
+            if (!addressTextarea.value.trim()) {
+                addressError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Update displayed profile information
+                profileNameDisplay.textContent = fullNameInput.value.trim();
+                profileEmailDisplay.textContent = emailInput.value.trim();
+                profilePhoneDisplay.textContent = `Phone: ${phoneInput.value.trim()}`;
+                profileAddressDisplay.textContent = `Address: ${addressTextarea.value.trim()}`;
+
+                // Simulate saving data (in a real app, send this to a backend)
+                console.log('Profile Data Saved:', {
+                    fullName: fullNameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    phone: phoneInput.value.trim(),
+                    address: addressTextarea.value.trim()
+                });
+                showMessage('Profile Updated!', 'Your profile information has been successfully saved.', 'success');
+            } else {
+                showMessage('Validation Error', 'Please correct the errors in the form and try again.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

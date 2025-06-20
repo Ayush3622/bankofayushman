@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Insurance Management</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Card styling for sections */
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem; /* Spacing between cards */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border-left: 4px solid #3b82f6; /* Default blue border for sections */
+        }
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* Form Field Styles - No @apply */
+        .form-input-style {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.15s ease-in-out;
+        }
+        .form-input-style:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+        .form-select-style {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            transition: all 0.15s ease-in-out;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%234a5568'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+        }
+        .form-select-style:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+        .form-textarea-style {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.15s ease-in-out;
+            min-height: 80px;
+        }
+        .form-textarea-style:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+
+        /* Policy Status Badge Styles */
+        .policy-status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem; /* px-3 py-0.5 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500; /* font-medium */
+            line-height: 1;
+        }
+        .status-active { background-color: #dcfce7; color: #16a34a; } /* green-100, green-700 */
+        .status-lapsed { background-color: #fef9c3; color: #b45309; } /* yellow-100, amber-700 */
+        .status-expired { background-color: #fee2e2; color: #dc2626; } /* red-100, red-700 */
+        .status-pending { background-color: #e0e7ff; color: #4338ca; } /* indigo-100, indigo-700 */
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content Area - Full width -->
+   <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Insurance Management
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Current Insurance Policies</h2>
+
+                <!-- Current Policies List -->
+                <div id="policies-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Policy Card Example (will be rendered by JS) -->
+                    <div class="section-card">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                                <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.001 12.001 0 002.923 12c0 3.072 1.578 5.762 3.919 7.329a12.001 12.001 0 0014.167 0c2.341-1.567 3.919-4.257 3.919-7.329C21.077 7.944 17.136 4.016 12 4.016z"></path></svg>
+                                MyLife Protector
+                            </h3>
+                            <span class="policy-status-badge status-active">Active</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-1">Policy Type: Life Insurance</p>
+                        <p class="text-gray-600 text-sm mb-1">Policy No: LIP0012345</p>
+                        <p class="text-gray-600 text-sm mb-1">Coverage: $500,000</p>
+                        <p class="text-gray-600 text-sm mb-4">Next Premium: $50.00 (Due: Aug 1, 2025)</p>
+                        <div class="flex justify-end space-x-2">
+                            <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">View Details</button>
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm">Download</button>
+                            <button class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">Renew</button>
+                        </div>
+                    </div>
+                    <!-- Placeholder for no policies -->
+                    <p id="no-policies-message" class="col-span-full text-center text-gray-500 py-8 hidden">No active insurance policies found. Request a new one below!</p>
+                </div>
+
+                <!-- Request New Policy Section -->
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 mt-8">Request New Policy</h2>
+                <div class="section-card">
+                    <form id="new-policy-request-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <label for="policyType" class="block text-gray-700 text-sm font-medium mb-2">Policy Type</label>
+                                <select id="policyType" name="policyType" class="form-select-style" required>
+                                    <option value="">Select a policy type</option>
+                                    <option value="life">Life Insurance</option>
+                                    <option value="health">Health Insurance</option>
+                                    <option value="auto">Auto Insurance</option>
+                                    <option value="home">Home Insurance</option>
+                                    <option value="travel">Travel Insurance</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="desiredCoverage" class="block text-gray-700 text-sm font-medium mb-2">Desired Coverage Amount ($)</label>
+                                <input type="number" id="desiredCoverage" name="desiredCoverage" class="form-input-style" placeholder="e.g., 100000" min="1" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="comments" class="block text-gray-700 text-sm font-medium mb-2">Additional Comments (Optional)</label>
+                            <textarea id="comments" name="comments" class="form-textarea-style" placeholder="e.g., interested in family health plan, coverage for a new car etc."></textarea>
+                        </div>
+                        <div class="flex justify-end mt-6">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Request Quote
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- File a Claim Section -->
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 mt-8">File a Claim</h2>
+                <div class="section-card">
+                    <form id="file-claim-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <label for="claimPolicyNumber" class="block text-gray-700 text-sm font-medium mb-2">Policy Number</label>
+                                <input type="text" id="claimPolicyNumber" name="claimPolicyNumber" class="form-input-style" placeholder="e.g., LIP0012345" required>
+                            </div>
+                            <div>
+                                <label for="claimType" class="block text-gray-700 text-sm font-medium mb-2">Claim Type</label>
+                                <select id="claimType" name="claimType" class="form-select-style" required>
+                                    <option value="">Select claim type</option>
+                                    <option value="medical">Medical Claim</option>
+                                    <option value="accident">Accident Claim</option>
+                                    <option value="property_damage">Property Damage</option>
+                                    <option value="theft">Theft</option>
+                                    <option value="death_benefit">Death Benefit</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="claimDescription" class="block text-gray-700 text-sm font-medium mb-2">Claim Description</label>
+                            <textarea id="claimDescription" name="claimDescription" class="form-textarea-style" placeholder="Briefly describe the incident..." required></textarea>
+                        </div>
+                        <div class="flex justify-end mt-6">
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Submit Claim
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const policiesListContainer = document.getElementById('policies-list');
+        const noPoliciesMessage = document.getElementById('no-policies-message');
+        const newPolicyRequestForm = document.getElementById('new-policy-request-form');
+        const fileClaimForm = document.getElementById('file-claim-form');
+
+        // Simulated data for current policies
+        let currentPolicies = [
+            {
+                id: 'pol1',
+                name: 'MyLife Protector',
+                type: 'Life Insurance',
+                policyNo: 'LIP0012345',
+                coverage: '500,000',
+                premium: '50.00',
+                nextPremiumDate: 'Aug 1, 2025',
+                status: 'Active'
+            },
+            {
+                id: 'pol2',
+                name: 'Family Health Plus',
+                type: 'Health Insurance',
+                policyNo: 'HEP9876543',
+                coverage: '250,000',
+                premium: '120.00',
+                nextPremiumDate: 'Jul 15, 2025',
+                status: 'Active'
+            },
+            {
+                id: 'pol3',
+                name: 'AutoSecure Standard',
+                type: 'Auto Insurance',
+                policyNo: 'AUT3210987',
+                coverage: '50,000',
+                premium: '80.00',
+                nextPremiumDate: 'Sept 1, 2025',
+                status: 'Lapsed'
+            },
+            {
+                id: 'pol4',
+                name: 'Home Guard Basic',
+                type: 'Home Insurance',
+                policyNo: 'HOM6543210',
+                coverage: '300,000',
+                premium: '70.00',
+                nextPremiumDate: 'June 1, 2025', // Past date for expired example
+                status: 'Expired'
+            }
+        ];
+
+        // Function to render current policies
+        function renderPolicies() {
+            policiesListContainer.innerHTML = ''; // Clear existing policies
+            if (currentPolicies.length === 0) {
+                noPoliciesMessage.classList.remove('hidden');
+                policiesListContainer.appendChild(noPoliciesMessage);
+            } else {
+                noPoliciesMessage.classList.add('hidden');
+                currentPolicies.forEach(policy => {
+                    const policyCard = document.createElement('div');
+                    policyCard.className = 'section-card'; // Reusing section-card for consistency
+                    policyCard.setAttribute('data-policy-id', policy.id);
+
+                    const statusClass = policy.status.toLowerCase();
+
+                    policyCard.innerHTML = `
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                                ${policy.type.includes('Life') ? `<svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.001 12.001 0 002.923 12c0 3.072 1.578 5.762 3.919 7.329a12.001 12.001 0 0014.167 0c2.341-1.567 3.919-4.257 3.919-7.329C21.077 7.944 17.136 4.016 12 4.016z"></path></svg>` : ''}
+                                ${policy.type.includes('Health') ? `<svg class="w-6 h-6 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>` : ''}
+                                ${policy.type.includes('Auto') ? `<svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-2m-6 10H4a2 2 0 01-2-2V7a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-6l-2 2h-2z"></path></svg>` : ''}
+                                ${policy.type.includes('Home') ? `<svg class="w-6 h-6 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>` : ''}
+                                ${policy.name}
+                            </h3>
+                            <span class="policy-status-badge status-${statusClass}">${policy.status}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-1">Policy Type: ${policy.type}</p>
+                        <p class="text-gray-600 text-sm mb-1">Policy No: ${policy.policyNo}</p>
+                        <p class="text-gray-600 text-sm mb-1">Coverage: $${policy.coverage}</p>
+                        <p class="text-gray-600 text-sm mb-4">Next Premium: $${policy.premium} (Due: ${policy.nextPremiumDate})</p>
+                        <div class="flex justify-end space-x-2">
+                            <button data-action="view-details" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">View Details</button>
+                            <button data-action="download-policy" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm">Download</button>
+                            ${policy.status !== 'Expired' ? `<button data-action="renew-policy" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">Renew</button>` : ''}
+                            ${policy.status === 'Expired' ? `<button data-action="reapply-policy" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">Re-apply</button>` : ''}
+                        </div>
+                    `;
+                    policiesListContainer.appendChild(policyCard);
+                });
+
+                // Add event listeners for policy action buttons
+                policiesListContainer.querySelectorAll('button[data-action]').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const policyId = event.target.closest('.section-card').dataset.policyId;
+                        const action = event.target.dataset.action;
+                        alert(`Action: "${action}" for policy ID: ${policyId}`);
+                        // In a real app, these would trigger specific modals or navigate to relevant pages
+                    });
+                });
+            }
+        }
+
+        // Handle New Policy Request form submission
+        newPolicyRequestForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const policyType = document.getElementById('policyType').value;
+            const desiredCoverage = document.getElementById('desiredCoverage').value;
+            const comments = document.getElementById('comments').value;
+
+            alert(`New Policy Request Submitted:
+            Type: ${policyType}
+            Coverage: $${desiredCoverage}
+            Comments: ${comments || 'None'}
+            We will contact you shortly with a quote.`);
+            newPolicyRequestForm.reset();
+        });
+
+        // Handle File Claim form submission
+        fileClaimForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const claimPolicyNumber = document.getElementById('claimPolicyNumber').value;
+            const claimType = document.getElementById('claimType').value;
+            const claimDescription = document.getElementById('claimDescription').value;
+
+            alert(`Claim Submitted:
+            Policy No: ${claimPolicyNumber}
+            Claim Type: ${claimType}
+            Description: ${claimDescription}
+            Our team will review your claim and get back to you.`);
+            fileClaimForm.reset();
+        });
+
+        // Initial render of policies on page load
+        document.addEventListener('DOMContentLoaded', renderPolicies);
+    </script>
+</body>
+</html>

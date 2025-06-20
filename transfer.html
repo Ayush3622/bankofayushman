@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Funds Transfer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Main Content Area -->
+   <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Transfer Funds
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Make a New Transfer</h2>
+
+                <form id="transferForm" class="space-y-6">
+                    <!-- Transfer Type Selection -->
+                    <div>
+                        <label for="transferType" class="block text-sm font-medium text-gray-700 mb-2">Transfer Type</label>
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="transferType" value="own" checked
+                                       class="form-radio h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <span class="ml-2 text-gray-700">Between My Accounts</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="transferType" value="external"
+                                       class="form-radio h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <span class="ml-2 text-gray-700">To Another Bank Account</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="transferType" value="beneficiary"
+                                       class="form-radio h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <span class="ml-2 text-gray-700">To a Saved Beneficiary</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- From Account -->
+                    <div>
+                        <label for="fromAccount" class="block text-sm font-medium text-gray-700">From Account</label>
+                        <select id="fromAccount" name="fromAccount" required
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Select an account</option>
+                            <option value="checking">Checking Account (**** 1234) - $15,374.77</option>
+                            <option value="savings">Savings Account (**** 5678) - $42,100.20</option>
+                        </select>
+                        <p id="fromAccountError" class="text-red-500 text-xs mt-1 hidden">Please select a 'From' account.</p>
+                    </div>
+
+                    <!-- To Account (Dynamic based on transferType) -->
+                    <div id="toAccountSection">
+                        <!-- Default for 'own' transfer type -->
+                        <div>
+                            <label for="toAccountOwn" class="block text-sm font-medium text-gray-700">To Account</label>
+                            <select id="toAccountOwn" name="toAccountOwn" required
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="">Select an account</option>
+                                <option value="savings">Savings Account (**** 5678) - $42,100.20</option>
+                                <option value="checking">Checking Account (**** 1234) - $15,374.77</option>
+                            </select>
+                            <p id="toAccountOwnError" class="text-red-500 text-xs mt-1 hidden">Please select a 'To' account.</p>
+                        </div>
+                    </div>
+
+                    <!-- Amount -->
+                    <div>
+                        <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                        <input type="number" id="amount" name="amount" required step="0.01" min="0.01"
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                               placeholder="e.g., 100.00">
+                        <p id="amountError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid amount (e.g., 50.00).</p>
+                    </div>
+
+                    <!-- Description/Memo -->
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
+                        <input type="text" id="description" name="description"
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                               placeholder="e.g., Monthly rent, Savings transfer">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all-fast">
+                        Proceed with Transfer
+                    </button>
+                </form>
+
+                <!-- Confirmation Modal (hidden by default) -->
+                <div id="confirmationModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+                    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md mx-4 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Confirm Transfer</h3>
+                        <p class="text-gray-700 mb-6">Are you sure you want to proceed with this transfer?</p>
+                        
+                        <div class="bg-gray-50 p-4 rounded-md mb-6 text-left">
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">From:</span> <span id="confirmFromAccount"></span></p>
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">To:</span> <span id="confirmToAccount"></span></p>
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">Amount:</span> <span id="confirmAmount" class="font-bold text-green-700 text-lg"></span></p>
+                            <p class="text-sm text-gray-600"><span class="font-semibold">Description:</span> <span id="confirmDescription"></span></p>
+                        </div>
+
+                        <div class="flex justify-end space-x-4">
+                            <button id="cancelTransfer" class="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-all-fast">
+                                Cancel
+                            </button>
+                            <button id="confirmProceed" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all-fast">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success/Error Message Box (hidden by default) -->
+                <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+                    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4 text-center">
+                        <h3 id="messageTitle" class="text-2xl font-bold text-gray-800 mb-4"></h3>
+                        <p id="messageText" class="text-gray-700 mb-6"></p>
+                        <button id="closeMessage" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all-fast">
+                            Close
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle script for the sidebar (reused from dashboard/history)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const sidebar = document.querySelector('aside'); 
+
+        if (mobileMenuButton && mobileMenu && sidebar) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('flex');
+            });
+        }
+
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    sidebar.classList.add('hidden');
+                    sidebar.classList.remove('flex');
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('flex');
+                mobileMenu.classList.add('hidden');
+            } else {
+                if (!mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                     sidebar.classList.add('hidden');
+                     sidebar.classList.remove('flex');
+                }
+            }
+        });
+
+        // --- Funds Transfer Specific JavaScript ---
+        const transferForm = document.getElementById('transferForm');
+        const fromAccountSelect = document.getElementById('fromAccount');
+        const toAccountSection = document.getElementById('toAccountSection');
+        const amountInput = document.getElementById('amount');
+        const descriptionInput = document.getElementById('description');
+
+        const fromAccountError = document.getElementById('fromAccountError');
+        const toAccountOwnError = document.getElementById('toAccountOwnError');
+        const amountError = document.getElementById('amountError');
+
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmFromAccount = document.getElementById('confirmFromAccount');
+        const confirmToAccount = document.getElementById('confirmToAccount');
+        const confirmAmount = document.getElementById('confirmAmount');
+        const confirmDescription = document.getElementById('confirmDescription');
+        const cancelTransferBtn = document.getElementById('cancelTransfer');
+        const confirmProceedBtn = document.getElementById('confirmProceed');
+
+        const messageBox = document.getElementById('messageBox');
+        const messageTitle = document.getElementById('messageTitle');
+        const messageText = document.getElementById('messageText');
+        const closeMessageBtn = document.getElementById('closeMessage');
+
+        // Initial render of "To Account" based on default transfer type
+        renderToAccountField('own'); 
+
+        // Event listener for transfer type radio buttons
+        document.querySelectorAll('input[name="transferType"]').forEach(radio => {
+            radio.addEventListener('change', (event) => {
+                renderToAccountField(event.target.value);
+            });
+        });
+
+        function renderToAccountField(type) {
+            let html = '';
+            // Clear any previous errors on dynamic fields
+            toAccountOwnError.classList.add('hidden'); 
+            const externalAccountError = document.getElementById('externalAccountError');
+            if (externalAccountError) externalAccountError.classList.add('hidden');
+            const externalBankError = document.getElementById('externalBankError');
+            if (externalBankError) externalBankError.classList.add('hidden');
+            const beneficiarySelectError = document.getElementById('beneficiarySelectError');
+            if (beneficiarySelectError) beneficiarySelectError.classList.add('hidden');
+
+
+            if (type === 'own') {
+                html = `
+                    <div>
+                        <label for="toAccountOwn" class="block text-sm font-medium text-gray-700">To Account</label>
+                        <select id="toAccountOwn" name="toAccountOwn" required
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Select an account</option>
+                            <option value="savings">Savings Account (**** 5678) - $42,100.20</option>
+                            <option value="checking">Checking Account (**** 1234) - $15,374.77</option>
+                        </select>
+                        <p id="toAccountOwnError" class="text-red-500 text-xs mt-1 hidden">Please select a 'To' account.</p>
+                    </div>
+                `;
+            } else if (type === 'external') {
+                html = `
+                    <div class="space-y-4">
+                        <div>
+                            <label for="externalAccount" class="block text-sm font-medium text-gray-700">Recipient Account Number</label>
+                            <input type="text" id="externalAccount" name="externalAccount" required pattern="[0-9]{9,18}"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                   placeholder="e.g., 1234567890">
+                            <p id="externalAccountError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid 9-18 digit account number.</p>
+                        </div>
+                        <div>
+                            <label for="externalBank" class="block text-sm font-medium text-gray-700">Recipient Bank Name/Routing No.</label>
+                            <input type="text" id="externalBank" name="externalBank" required
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                   placeholder="e.g., ABC Bank, 012345678">
+                            <p id="externalBankError" class="text-red-500 text-xs mt-1 hidden">Recipient bank details are required.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'beneficiary') {
+                html = `
+                    <div>
+                        <label for="beneficiarySelect" class="block text-sm font-medium text-gray-700">Select Beneficiary</label>
+                        <select id="beneficiarySelect" name="beneficiarySelect" required
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Choose a saved beneficiary</option>
+                            <option value="JaneDoe_1234">Jane Doe (**** 1234 - Other Bank)</option>
+                            <option value="UtilityCo_5678">Utility Co. (Bill Pay)</option>
+                        </select>
+                        <p id="beneficiarySelectError" class="text-red-500 text-xs mt-1 hidden">Please select a beneficiary.</p>
+                    </div>
+                `;
+            }
+            toAccountSection.innerHTML = html;
+        }
+
+        transferForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Hide all error messages initially
+            [fromAccountError, toAccountOwnError, amountError].forEach(el => el.classList.add('hidden'));
+            const externalAccountError = document.getElementById('externalAccountError');
+            if (externalAccountError) externalAccountError.classList.add('hidden');
+            const externalBankError = document.getElementById('externalBankError');
+            if (externalBankError) externalBankError.classList.add('hidden');
+            const beneficiarySelectError = document.getElementById('beneficiarySelectError');
+            if (beneficiarySelectError) beneficiarySelectError.classList.add('hidden');
+
+            let isValid = true;
+
+            const fromAccountValue = fromAccountSelect.value;
+            const amountValue = parseFloat(amountInput.value);
+            const descriptionValue = descriptionInput.value.trim();
+            const transferType = document.querySelector('input[name="transferType"]:checked').value;
+
+            // Validate From Account
+            if (!fromAccountValue) {
+                fromAccountError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Amount
+            if (isNaN(amountValue) || amountValue <= 0) {
+                amountError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            let toAccountValue = '';
+            let recipientDetails = ''; // For confirmation modal
+
+            // Validate To Account based on transfer type
+            if (transferType === 'own') {
+                const toAccountOwnSelect = document.getElementById('toAccountOwn');
+                if (!toAccountOwnSelect || !toAccountOwnSelect.value) {
+                    toAccountOwnError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    toAccountValue = toAccountOwnSelect.value;
+                    recipientDetails = toAccountOwnSelect.options[toAccountOwnSelect.selectedIndex].text;
+                }
+            } else if (transferType === 'external') {
+                const externalAccountInput = document.getElementById('externalAccount');
+                const externalBankInput = document.getElementById('externalBank');
+                
+                if (!externalAccountInput || !externalAccountInput.value || !/^\d{9,18}$/.test(externalAccountInput.value)) {
+                    externalAccountError.classList.remove('hidden');
+                    isValid = false;
+                }
+                if (!externalBankInput || !externalBankInput.value.trim()) {
+                    externalBankError.classList.remove('hidden');
+                    isValid = false;
+                }
+                if (isValid) { // Only set if inputs are valid
+                    toAccountValue = externalAccountInput.value;
+                    recipientDetails = `Acc: ${externalAccountInput.value}, Bank: ${externalBankInput.value.trim()}`;
+                }
+            } else if (transferType === 'beneficiary') {
+                const beneficiarySelect = document.getElementById('beneficiarySelect');
+                if (!beneficiarySelect || !beneficiarySelect.value) {
+                    beneficiarySelectError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    toAccountValue = beneficiarySelect.value;
+                    recipientDetails = beneficiarySelect.options[beneficiarySelect.selectedIndex].text;
+                }
+            }
+
+            // Prevent transfer from and to the same account if "own" transfer
+            if (transferType === 'own' && fromAccountValue === toAccountValue) {
+                alert("Cannot transfer to the same account!"); // Using alert for simplicity here, replace with custom modal
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Populate confirmation modal
+                confirmFromAccount.textContent = fromAccountSelect.options[fromAccountSelect.selectedIndex].text;
+                confirmToAccount.textContent = recipientDetails;
+                confirmAmount.textContent = `$${amountValue.toFixed(2)}`;
+                confirmDescription.textContent = descriptionValue || 'N/A';
+
+                confirmationModal.classList.remove('hidden');
+            }
+        });
+
+        // Confirmation Modal Buttons
+        cancelTransferBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+        });
+
+        confirmProceedBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+            // Simulate successful transfer for frontend
+            showMessage('Transfer Successful!', 'Your funds have been transferred successfully.');
+            // In a real app, this is where you'd send the actual transfer request to the backend
+            const formData = {
+                fromAccount: fromAccountSelect.value,
+                toAccountType: document.querySelector('input[name="transferType"]:checked').value,
+                toAccount: getToAccountValue(), // Helper function to get the correct 'to' account value
+                amount: parseFloat(amountInput.value),
+                description: descriptionInput.value.trim()
+            };
+            console.log('Final Transfer Data (simulated):', formData);
+            // After successful backend response, you would typically clear the form or redirect
+            transferForm.reset(); // Clear form after "transfer"
+            renderToAccountField('own'); // Reset dynamic field
+        });
+
+        closeMessageBtn.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+        });
+
+        function showMessage(title, text, type = 'success') {
+            messageTitle.textContent = title;
+            messageText.textContent = text;
+            messageTitle.classList.remove('text-green-700', 'text-red-700'); // Clear previous colors
+            messageText.classList.remove('text-green-700', 'text-red-700');
+
+            if (type === 'success') {
+                messageTitle.classList.add('text-green-700');
+                messageText.classList.add('text-green-700');
+            } else if (type === 'error') {
+                messageTitle.classList.add('text-red-700');
+                messageText.classList.add('text-red-700');
+            }
+            messageBox.classList.remove('hidden');
+        }
+
+        // Helper to get the correct "to" account value from the dynamically rendered field
+        function getToAccountValue() {
+            const transferType = document.querySelector('input[name="transferType"]:checked').value;
+            if (transferType === 'own') {
+                const toAccountOwnSelect = document.getElementById('toAccountOwn');
+                return toAccountOwnSelect ? toAccountOwnSelect.value : '';
+            } else if (transferType === 'external') {
+                const externalAccountInput = document.getElementById('externalAccount');
+                return externalAccountInput ? externalAccountInput.value : '';
+            } else if (transferType === 'beneficiary') {
+                const beneficiarySelect = document.getElementById('beneficiarySelect');
+                return beneficiarySelect ? beneficiarySelect.value : '';
+            }
+            return '';
+        }
+
+    </script>
+</body>
+</html>

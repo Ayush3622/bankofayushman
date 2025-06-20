@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Account Management</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Custom styling for account cards to enhance visual appeal */
+        .account-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .account-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-card-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .account-card-body {
+            padding: 1.5rem;
+        }
+
+        .account-card-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+        
+        /* Specific colors for borders */
+        .border-checking { border-left-color: #3B82F6; } /* Blue */
+        .border-savings { border-left-color: #10B981; } /* Green */
+        .border-credit { border-left-color: #8B5CF6; } /* Purple */
+        .border-business { border-left-color: #F97316; } /* Orange */
+
+        /* Smooth transition for details toggle */
+        .account-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .account-details.open {
+            max-height: 500px; /* Adjust based on max content height */
+            transition: max-height 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content Area - Full width -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Account Management
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <section class="mb-8 max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Your Accounts</h2>
+                
+                <!-- Add New Account Button -->
+                <div class="flex justify-end mb-6">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Add New Account
+                    </button>
+                </div>
+
+                <!-- Account List -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- Checking Account Card -->
+                    <div class="account-card border-l-8 border-checking" data-account-type="checking">
+                        <div class="account-card-header">
+                            <h3 class="text-2xl font-bold text-gray-800">Checking Account</h3>
+                            <span class="text-blue-600 font-semibold text-xl">$15,450.75</span>
+                        </div>
+                        <div class="account-card-body pb-0">
+                            <p class="text-gray-600 mb-1">Account Number: <span class="font-mono">**** **** **** 1234</span></p>
+                            <p class="text-gray-600 mb-1">Account Holder: John Doe</p>
+                            <p class="text-gray-600 mb-4">Account Type: Personal Checking</p>
+                            
+                            <div class="account-details">
+                                <p class="text-gray-600 mb-1">Available Balance: <span class="font-semibold text-blue-700">$15,400.00</span></p>
+                                <p class="text-gray-600 mb-1">Interest Rate: 0.01% APY</p>
+                                <p class="text-gray-600 mb-1">Opening Date: 2018-03-15</p>
+                                <p class="text-gray-600 mb-1">Branch: Main Street Branch</p>
+                            </div>
+                        </div>
+                        <div class="account-card-footer">
+                            <button class="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md transition-all-fast text-sm toggle-details-button">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                More Details
+                            </button>
+                            <button class="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                Transfer Funds
+                            </button>
+                            <button class="flex items-center bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium py-2 px-4 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM9 16H6a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v2m-6 2h6m-6 4v3m0-3h-3m3 0h3m-6 4v-3m0 3h3m0-3h3"></path></svg>
+                                View Transactions
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Savings Account Card -->
+                    <div class="account-card border-l-8 border-savings" data-account-type="savings">
+                        <div class="account-card-header">
+                            <h3 class="text-2xl font-bold text-gray-800">Savings Account</h3>
+                            <span class="text-green-600 font-semibold text-xl">$42,100.20</span>
+                        </div>
+                        <div class="account-card-body pb-0">
+                            <p class="text-gray-600 mb-1">Account Number: <span class="font-mono">**** **** **** 5678</span></p>
+                            <p class="text-gray-600 mb-1">Account Holder: John Doe</p>
+                            <p class="text-gray-600 mb-4">Account Type: Personal Savings</p>
+                            
+                            <div class="account-details">
+                                <p class="text-gray-600 mb-1">Available Balance: <span class="font-semibold text-green-700">$42,100.20</span></p>
+                                <p class="text-gray-600 mb-1">Interest Rate: 1.25% APY</p>
+                                <p class="text-gray-600 mb-1">Opening Date: 2017-01-20</p>
+                                <p class="text-gray-600 mb-1">Branch: Downtown Branch</p>
+                            </div>
+                        </div>
+                        <div class="account-card-footer">
+                            <button class="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md transition-all-fast text-sm toggle-details-button">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                More Details
+                            </button>
+                            <button class="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                Transfer Funds
+                            </button>
+                            <button class="flex items-center bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM9 16H6a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v2m-6 2h6m-6 4v3m0-3h-3m3 0h3m-6 4v-3m0 3h3m0-3h3"></path></svg>
+                                View Transactions
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Business Account Card -->
+                    <div class="account-card border-l-8 border-business" data-account-type="business">
+                        <div class="account-card-header">
+                            <h3 class="text-2xl font-bold text-gray-800">Business Account</h3>
+                            <span class="text-orange-600 font-semibold text-xl">$78,900.00</span>
+                        </div>
+                        <div class="account-card-body pb-0">
+                            <p class="text-gray-600 mb-1">Account Number: <span class="font-mono">**** **** **** 3333</span></p>
+                            <p class="text-gray-600 mb-1">Account Holder: MyCompany Inc.</p>
+                            <p class="text-gray-600 mb-4">Account Type: Small Business</p>
+                            
+                            <div class="account-details">
+                                <p class="text-gray-600 mb-1">Available Balance: <span class="font-semibold text-orange-700">$78,850.00</span></p>
+                                <p class="text-gray-600 mb-1">Monthly Fees: $15.00</p>
+                                <p class="text-gray-600 mb-1">Opening Date: 2020-11-01</p>
+                                <p class="text-gray-600 mb-1">Branch: Corporate Branch</p>
+                            </div>
+                        </div>
+                        <div class="account-card-footer">
+                            <button class="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-md transition-all-fast text-sm toggle-details-button">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                More Details
+                            </button>
+                            <button class="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                Transfer Funds
+                            </button>
+                            <button class="flex items-center bg-orange-50 hover:bg-orange-100 text-orange-700 font-medium py-2 px-4 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM9 16H6a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v2m-6 2h6m-6 4v3m0-3h-3m3 0h3m-6 4v-3m0 3h3m0-3h3"></path></svg>
+                                View Statements
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript for toggling account details
+        document.querySelectorAll('.toggle-details-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const card = event.target.closest('.account-card');
+                if (card) {
+                    const details = card.querySelector('.account-details');
+                    const icon = button.querySelector('svg path');
+                    details.classList.toggle('open');
+
+                    // Toggle the arrow icon direction
+                    if (details.classList.contains('open')) {
+                        icon.setAttribute('d', 'M5 15l7-7 7 7'); // Arrow up
+                    } else {
+                        icon.setAttribute('d', 'M19 9l-7 7-7-7'); // Arrow down
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

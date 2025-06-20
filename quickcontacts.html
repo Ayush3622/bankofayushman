@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Quick Contacts</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Card styling for contacts and form */
+        .contact-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1rem; /* Spacing between cards */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border-left: 4px solid #3b82f6; /* Default blue border for contacts */
+        }
+        .contact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* Form Field Styles - No @apply */
+        .form-input-style {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.15s ease-in-out;
+        }
+        .form-input-style:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+        .form-select-style {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            transition: all 0.15s ease-in-out;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%234a5568'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+        }
+        .form-select-style:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content Area - Full width -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Quick Contacts
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Add New Contact</h2>
+
+                <!-- Add New Contact Form -->
+                <div class="contact-card">
+                    <form id="add-contact-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <label for="contactName" class="block text-gray-700 text-sm font-medium mb-2">Contact Name</label>
+                                <input type="text" id="contactName" name="contactName" class="form-input-style" placeholder="e.g., Jane Doe" required>
+                            </div>
+                            <div>
+                                <label for="accountNumber" class="block text-gray-700 text-sm font-medium mb-2">Account Number</label>
+                                <input type="text" id="accountNumber" name="accountNumber" class="form-input-style" placeholder="e.g., 9876543210" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <label for="bankName" class="block text-gray-700 text-sm font-medium mb-2">Bank Name</label>
+                                <input type="text" id="bankName" name="bankName" class="form-input-style" placeholder="e.g., Another Bank Corp." required>
+                            </div>
+                            <div>
+                                <label for="nickname" class="block text-gray-700 text-sm font-medium mb-2">Nickname (Optional)</label>
+                                <input type="text" id="nickname" name="nickname" class="form-input-style" placeholder="e.g., Sister, Colleague">
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-6">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Add Contact
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Your Quick Contacts List -->
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 mt-8">Your Quick Contacts</h2>
+                <div id="contacts-list">
+                    <!-- Contacts will be dynamically loaded here by JavaScript -->
+                    <p id="no-contacts-message" class="text-gray-500 text-center py-8">No quick contacts saved yet. Add one above!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const addContactForm = document.getElementById('add-contact-form');
+        const contactsListContainer = document.getElementById('contacts-list');
+        const noContactsMessage = document.getElementById('no-contacts-message');
+
+        // Simulate contact storage
+        let quickContacts = [
+            { id: 'contact1', name: 'Alice Wonderland', accountNumber: '**** **** **** 1011', bankName: 'Universal Bank', nickname: 'Friend' },
+            { id: 'contact2', name: 'Bob Builder', accountNumber: '**** **** **** 2233', bankName: 'City Bank', nickname: '' },
+            { id: 'contact3', name: 'Charlie Chaplin', accountNumber: '**** **** **** 4455', bankName: 'Global Financial', nickname: 'Dad' }
+        ];
+
+        // Function to render all quick contacts
+        function renderContacts() {
+            contactsListContainer.innerHTML = ''; // Clear existing contacts
+            if (quickContacts.length === 0) {
+                noContactsMessage.classList.remove('hidden');
+                contactsListContainer.appendChild(noContactsMessage);
+            } else {
+                noContactsMessage.classList.add('hidden');
+                quickContacts.forEach(contact => {
+                    const contactCard = document.createElement('div');
+                    contactCard.className = 'contact-card';
+                    contactCard.setAttribute('data-contact-id', contact.id);
+
+                    contactCard.innerHTML = `
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">${contact.name} ${contact.nickname ? `<span class="text-blue-500 text-sm font-normal">(${contact.nickname})</span>` : ''}</h3>
+                        </div>
+                        <p class="text-gray-600 mb-1">Account: <span class="font-mono">${contact.accountNumber}</span></p>
+                        <p class="text-gray-600 mb-4">Bank: ${contact.bankName}</p>
+                        <div class="flex justify-end space-x-3">
+                            <button data-action="transfer" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                Transfer Funds
+                            </button>
+                            <button data-action="edit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                Edit
+                            </button>
+                            <button data-action="remove" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                Remove
+                            </button>
+                        </div>
+                    `;
+                    contactsListContainer.appendChild(contactCard);
+                });
+
+                // Add event listeners for action buttons
+                contactsListContainer.querySelectorAll('button[data-action]').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const contactId = event.target.closest('.contact-card').dataset.contactId;
+                        const action = event.target.dataset.action;
+
+                        if (action === 'transfer') {
+                            alert(`Initiating transfer to ${contactId}.`);
+                            // In a real app, this would navigate to the transfer page with pre-filled contact info
+                        } else if (action === 'edit') {
+                            alert(`Editing contact ${contactId}.`);
+                            // In a real app, this would open a modal to edit contact details
+                        } else if (action === 'remove') {
+                            if (confirm('Are you sure you want to remove this contact?')) {
+                                quickContacts = quickContacts.filter(contact => contact.id !== contactId);
+                                renderContacts(); // Re-render the list after removal
+                            }
+                        }
+                    });
+                });
+            }
+        }
+
+        // Handle Add New Contact form submission
+        addContactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const contactName = document.getElementById('contactName').value.trim();
+            const accountNumber = document.getElementById('accountNumber').value.trim();
+            const bankName = document.getElementById('bankName').value.trim();
+            const nickname = document.getElementById('nickname').value.trim();
+
+            if (contactName && accountNumber && bankName) {
+                const newContact = {
+                    id: 'contact' + Date.now(), // Simple unique ID
+                    name: contactName,
+                    accountNumber: accountNumber,
+                    bankName: bankName,
+                    nickname: nickname
+                };
+                quickContacts.push(newContact);
+                addContactForm.reset(); // Clear the form
+                renderContacts(); // Re-render the contacts list
+            } else {
+                alert('Please fill in all required fields (Contact Name, Account Number, Bank Name).');
+            }
+        });
+
+        // Initial render of contacts when the page loads
+        document.addEventListener('DOMContentLoaded', renderContacts);
+    </script>
+</body>
+</html>

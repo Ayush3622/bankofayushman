@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Banking - MyBank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font globally using vanilla CSS */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom animation keyframes for a dynamic entrance effect */
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes bounceIn { /* Re-adding if you want this specific animation for hero CTA */
+            0%, 20%, 40%, 60%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+            40% {
+                transform: scale3d(.9, .9, .9);
+            }
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+            80% {
+                transform: scale3d(.97, .97, .97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        /* Apply custom animations with utility classes */
+        .animate-fade-in-scale-up {
+            animation: fadeInScaleUp 0.8s ease-out forwards;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .animate-bounce-in {
+            animation: bounceIn 0.9s ease-out forwards;
+        }
+        /* Delay utility for staggered animations */
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-600 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800 antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-900">MyBank</a>
+
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Home</a></li>
+                <li><a href="personal.html" class="text-blue-700 font-semibold border-b-2 border-blue-700 pb-1 transition duration-300">Personal</a></li>
+                <li><a href="business.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Business</a></li>
+                <li><a href="about.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">About</a></li>
+            </ul>
+
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="text-blue-700 hover:text-blue-800 font-semibold py-2 px-4 rounded-md transition duration-300">Login</a>
+                <a href="register.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="relative bg-gradient-to-br from-indigo-700 to-blue-500 text-white py-24 md:py-32 px-4 overflow-hidden">
+            <div class="relative max-w-5xl mx-auto text-center z-10">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 animate-fade-in-scale-up">
+                    Your Financial Journey, Simplified
+                </h1>
+                <p class="text-xl md:text-2xl leading-relaxed mb-10 opacity-90 animate-fade-in delay-200">
+                    MyBank offers intuitive tools and personalized support to help you manage your money, achieve your goals, and live life on your terms in Kolkata and beyond.
+                </p>
+                <a href="register.html" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-12 rounded-full text-lg md:text-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 no-underline animate-bounce-in delay-400">
+                    Start Your Personal Account
+                </a>
+            </div>
+        </section>
+
+        <section class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-center text-4xl md:text-5xl font-bold text-blue-800 mb-16 leading-tight">
+                    Why Choose MyBank for Your Personal Finances?
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 text-center transform hover:-translate-y-2 transition-all duration-300 group">
+                        <div class="text-blue-600 mb-6 text-6xl group-hover:scale-110 transition-transform duration-300">📱</div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Seamless Digital Banking</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Manage your accounts anytime, anywhere with our intuitive mobile app and secure online banking platform.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 text-center transform hover:-translate-y-2 transition-all duration-300 group">
+                        <div class="text-green-600 mb-6 text-6xl group-hover:scale-110 transition-transform duration-300">🔒</div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Unmatched Security</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Your money and data are protected by state-of-the-art encryption and fraud prevention technologies.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 text-center transform hover:-translate-y-2 transition-all duration-300 group">
+                        <div class="text-purple-600 mb-6 text-6xl group-hover:scale-110 transition-transform duration-300">💖</div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Personalized Support</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Receive dedicated assistance from our friendly and knowledgeable customer service team, always ready to help.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-4 bg-gray-100">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-center text-4xl md:text-5xl font-bold text-blue-800 mb-16 leading-tight">
+                    Our Comprehensive Personal Banking Solutions
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-blue-200 text-center flex flex-col justify-between hover:shadow-xl transform hover:scale-100.5 transition-all duration-300">
+                        <div>
+                            <h3 class="text-blue-700 text-2xl font-semibold mb-4">Savings Accounts</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Grow your wealth securely with competitive interest rates and flexible savings options for every goal.
+                            </p>
+                        </div>
+                        </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-blue-200 text-center flex flex-col justify-between hover:shadow-xl transform hover:scale-100.5 transition-all duration-300">
+                        <div>
+                            <h3 class="text-blue-700 text-2xl font-semibold mb-4">Checking Accounts</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Manage daily expenses with ease, no hidden fees, and convenient digital features.
+                            </p>
+                        </div>
+                        </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-blue-200 text-center flex flex-col justify-between hover:shadow-xl transform hover:scale-100.5 transition-all duration-300">
+                        <div>
+                            <h3 class="text-blue-700 text-2xl font-semibold mb-4">Loans & Mortgages</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Achieve your dreams with personalized loan solutions for homes, education, or personal needs.
+                            </p>
+                        </div>
+                        </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-blue-200 text-center flex flex-col justify-between hover:shadow-xl transform hover:scale-100.5 transition-all duration-300">
+                        <div>
+                            <h3 class="text-blue-700 text-2xl font-semibold mb-4">Credit Cards</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Enjoy spending flexibility, rewards, and strong security with our range of credit card options.
+                            </p>
+                        </div>
+                        </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-blue-200 text-center flex flex-col justify-between hover:shadow-xl transform hover:scale-100.5 transition-all duration-300">
+                        <div>
+                            <h3 class="text-blue-700 text-2xl font-semibold mb-4">Digital Banking</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Experience convenient online and mobile banking, bill pay, and instant fund transfers at your fingertips.
+                            </p>
+                        </div>
+                        </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-blue-200 text-center flex flex-col justify-between hover:shadow-xl transform hover:scale-100.5 transition-all duration-300">
+                        <div>
+                            <h3 class="text-blue-700 text-2xl font-semibold mb-4">Investment Guidance</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Plan for your financial future with expert advice and tailored investment solutions.
+                            </p>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-4 bg-blue-700 text-white text-center shadow-inner">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">Ready to Take Control of Your Finances?</h2>
+                <p class="text-xl md:text-2xl leading-relaxed mb-12 opacity-90">
+                    Join MyBank today and experience banking designed around you.
+                </p>
+                <a href="register.html" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-12 rounded-full text-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 no-underline">
+                    Open Your Account Now!
+                </a>
+                <p class="mt-6 text-lg opacity-80">Already a customer? <a href="login.html" class="text-white font-bold no-underline hover:underline">Login here</a> to manage your accounts.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-5 mt-0 text-sm">
+        <p>&copy; 2025 MyBank. All rights reserved.</p>
+        <p class="mt-2">
+            <a href="privacypolicy.html" class="text-white hover:underline mx-2">Privacy Policy</a> |
+            <a href="termsofservice.html" class="text-white hover:underline mx-2">Terms of Service</a> |
+            <a href="contact.html" class="text-white hover:underline mx-2">Contact Us</a>
+        </p>
+    </footer>
+
+</body>
+</html>

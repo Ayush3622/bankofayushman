@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Pay Bills</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Overlay for mobile sidebar (not needed but keeping it in style for consistency) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10; /* Below sidebar, above main content */
+            display: none; /* Always hidden as sidebar is removed */
+        }
+
+        /* No more @apply rules here, they are moved directly to HTML elements */
+    </style>
+</head>
+<body>
+
+    <!-- Main Content Area - Now full width as sidebar is removed -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Bill Payments
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <section class="mb-8">
+                <!-- Tab Navigation -->
+                <div class="flex border-b border-gray-200 mb-6">
+                    <button id="tab-make-payment" class="px-6 py-3 rounded-t-lg text-lg font-semibold text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-300 transition-all-fast active">Make a Payment</button>
+                    <button id="tab-manage-billers" class="px-6 py-3 rounded-t-lg text-lg font-semibold text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-300 transition-all-fast">Manage Billers</button>
+                </div>
+                
+                <!-- Tab Content: Make a Payment -->
+                <div id="content-make-payment" class="p-6 bg-white rounded-b-lg shadow-md max-w-2xl mx-auto">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Make a Payment</h2>
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="billerName" class="block text-gray-700 text-sm font-medium mb-2">Biller Name</label>
+                                <input type="text" id="billerName" name="billerName" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-all-fast" placeholder="e.g., Electricity Company, Internet Provider">
+                            </div>
+                            <div>
+                                <label for="billerAccount" class="block text-gray-700 text-sm font-medium mb-2">Biller Account/Reference Number</label>
+                                <input type="text" id="billerAccount" name="billerAccount" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-all-fast" placeholder="e.g., 1234567890">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="amount" class="block text-gray-700 text-sm font-medium mb-2">Amount</label>
+                                <input type="number" id="amount" name="amount" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-all-fast" step="0.01" min="0.01" placeholder="e.g., 50.00">
+                            </div>
+                            <div>
+                                <label for="payFromAccount" class="block text-gray-700 text-sm font-medium mb-2">Pay From Account</label>
+                                <select id="payFromAccount" name="payFromAccount" class="w-full p-3 border border-gray-300 rounded-md shadow-sm bg-white appearance-none focus:ring-blue-500 focus:border-blue-500 transition-all-fast" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%234a5568'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e&quot;); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.5em 1.5em;">
+                                    <option value="">Select an account</option>
+                                    <option value="checking">Checking Account (**** 1234)</option>
+                                    <option value="savings">Savings Account (**** 5678)</option>
+                                    <option value="business">Business Account (**** 3333)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="billType" class="block text-gray-700 text-sm font-medium mb-2">Bill Type</label>
+                                <select id="billType" name="billType" class="w-full p-3 border border-gray-300 rounded-md shadow-sm bg-white appearance-none focus:ring-blue-500 focus:border-blue-500 transition-all-fast" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%234a5568'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e&quot;); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.5em 1.5em;">
+                                    <option value="">Select bill type</option>
+                                    <option value="utility">Utility (Electricity, Water, Gas)</option>
+                                    <option value="internet">Internet/Cable</option>
+                                    <option value="loan">Loan Payment</option>
+                                    <option value="rent">Rent/Mortgage</option>
+                                    <option value="insurance">Insurance Premium</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="paymentDate" class="block text-gray-700 text-sm font-medium mb-2">Payment Date</label>
+                                <input type="date" id="paymentDate" name="paymentDate" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-all-fast">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Payment Frequency</label>
+                            <div class="flex items-center space-x-4">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="frequency" value="one-time" class="form-radio text-blue-600 h-4 w-4" checked>
+                                    <span class="ml-2 text-gray-700">One-Time</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="frequency" value="recurring" class="form-radio text-blue-600 h-4 w-4">
+                                    <span class="ml-2 text-gray-700">Recurring</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Schedule Payment
+                            </button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Pay Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tab Content: Manage Billers -->
+                <div id="content-manage-billers" class="p-6 bg-white rounded-b-lg shadow-md max-w-2xl mx-auto hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Manage Billers</h2>
+                    
+                    <!-- Add New Biller Form -->
+                    <div class="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Add New Biller</h3>
+                        <form id="add-biller-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                                <div>
+                                    <label for="newBillerName" class="block text-gray-700 text-sm font-medium mb-2">Biller Name</label>
+                                    <input type="text" id="newBillerName" name="newBillerName" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-all-fast" placeholder="e.g., Phone Company" required>
+                                </div>
+                                <div>
+                                    <label for="newBillerAccount" class="block text-gray-700 text-sm font-medium mb-2">Biller Account Number</label>
+                                    <input type="text" id="newBillerAccount" name="newBillerAccount" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-all-fast" placeholder="e.g., 987654321" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="newBillerType" class="block text-gray-700 text-sm font-medium mb-2">Biller Type</label>
+                                <select id="newBillerType" name="newBillerType" class="w-full p-3 border border-gray-300 rounded-md shadow-sm bg-white appearance-none focus:ring-blue-500 focus:border-blue-500 transition-all-fast" style="background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%234a5568'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e&quot;); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.5em 1.5em;" required>
+                                    <option value="">Select biller type</option>
+                                    <option value="utility">Utility</option>
+                                    <option value="internet">Internet/Cable</option>
+                                    <option value="loan">Loan</option>
+                                    <option value="rent">Rent/Mortgage</option>
+                                    <option value="insurance">Insurance</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Add Biller
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- My Saved Billers List for Removal -->
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Your Saved Billers</h3>
+                    <div id="saved-billers-list">
+                        <!-- Billers will be dynamically loaded here -->
+                        <p class="text-gray-500 text-center py-4" id="no-billers-message">No saved billers. Add one above!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scheduled Payments Section (remains below tabs) -->
+            <section class="mt-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Scheduled Payments</h2>
+                <div class="info-card">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="font-semibold text-gray-800">Rent Payment to Landlord</p>
+                        <span class="text-lg text-green-600 font-bold">$1,200.00</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-1">Due: July 1, 2025 (Monthly)</p>
+                    <p class="text-gray-600 text-sm">From: Checking Account</p>
+                    <div class="flex justify-end mt-4 space-x-3">
+                        <button class="text-red-600 hover:text-red-800 font-medium text-sm">Cancel</button>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">Edit</button>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="font-semibold text-gray-800">Car Loan Payment</p>
+                        <span class="text-lg text-green-600 font-bold">$350.00</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-1">Due: June 25, 2025 (Bi-weekly)</p>
+                    <p class="text-gray-600 text-sm">From: Savings Account</p>
+                    <div class="flex justify-end mt-4 space-x-3">
+                        <button class="text-red-600 hover:text-red-800 font-medium text-sm">Cancel</button>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">Edit</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // No sidebar-related JavaScript as the sidebar HTML is removed
+        const body = document.body; 
+
+        // --- Existing Logic for Tabs and Biller Management ---
+
+        const tabMakePayment = document.getElementById('tab-make-payment');
+        const tabManageBillers = document.getElementById('tab-manage-billers');
+        const contentMakePayment = document.getElementById('content-make-payment');
+        const contentManageBillers = document.getElementById('content-manage-billers');
+
+        const addBillerForm = document.getElementById('add-biller-form');
+        const newBillerNameInput = document.getElementById('newBillerName');
+        const newBillerAccountInput = document.getElementById('newBillerAccount');
+        const newBillerTypeSelect = document.getElementById('newBillerType');
+        const savedBillersList = document.getElementById('saved-billers-list');
+        const noBillersMessage = document.getElementById('no-billers-message');
+
+        // Simulate biller storage (in a real app, this would be fetched from a backend/database)
+        let savedBillers = [
+            { id: 'biller1', name: 'Local Electricity Co.', account: '9876543210', type: 'utility' },
+            { id: 'biller2', name: 'Internet Fast & Co.', account: '1122334455', type: 'internet' },
+            { id: 'biller3', name: 'City Water Works', account: '5544332211', type: 'utility' }
+        ];
+
+        // Function to render saved billers
+        function renderSavedBillers() {
+            savedBillersList.innerHTML = ''; // Clear existing list
+            if (savedBillers.length === 0) {
+                noBillersMessage.classList.remove('hidden');
+            } else {
+                noBillersMessage.classList.add('hidden');
+                savedBillers.forEach(biller => {
+                    const billerCard = document.createElement('div');
+                    billerCard.className = 'info-card flex items-center justify-between';
+                    billerCard.innerHTML = `
+                        <div>
+                            <p class="text-lg font-semibold text-gray-800">${biller.name}</p>
+                            <p class="text-gray-600 text-sm">Account: ${biller.account}</p>
+                            <p class="text-gray-600 text-xs text-blue-500">${biller.type.charAt(0).toUpperCase() + biller.type.slice(1)}</p>
+                        </div>
+                        <button data-biller-id="${biller.id}" class="remove-biller-button text-red-600 hover:text-red-800 font-medium text-sm py-2 px-3 rounded-md transition-all-fast">
+                            <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            Remove
+                        </button>
+                    `;
+                    savedBillersList.appendChild(billerCard);
+                });
+
+                // Add event listeners to newly rendered remove buttons
+                document.querySelectorAll('.remove-biller-button').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const billerIdToRemove = event.currentTarget.dataset.billerId;
+                        savedBillers = savedBillers.filter(biller => biller.id !== billerIdToRemove);
+                        renderSavedBillers(); // Re-render the list after removal
+                    });
+                });
+            }
+        }
+
+        // Handle Add Biller form submission
+        addBillerForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const newBiller = {
+                id: 'biller' + (savedBillers.length + 1), // Simple unique ID generation
+                name: newBillerNameInput.value.trim(),
+                account: newBillerAccountInput.value.trim(),
+                type: newBillerTypeSelect.value
+            };
+
+            if (newBiller.name && newBiller.account && newBiller.type) {
+                savedBillers.push(newBiller);
+                renderSavedBillers(); // Re-render the list with the new biller
+                addBillerForm.reset(); // Clear the form
+                // Optionally provide user feedback (e.g., a success message)
+            } else {
+                // Handle form validation / error (e.g., show a message)
+                console.log('Please fill in all fields to add a biller.');
+            }
+        });
+
+        // Tab switching logic
+        tabMakePayment.addEventListener('click', () => {
+            tabMakePayment.classList.add('active');
+            tabManageBillers.classList.remove('active');
+            contentMakePayment.classList.remove('hidden');
+            contentManageBillers.classList.add('hidden');
+        });
+
+        tabManageBillers.addEventListener('click', () => {
+            tabManageBillers.classList.add('active');
+            tabMakePayment.classList.remove('active');
+            contentManageBillers.classList.remove('hidden');
+            contentMakePayment.classList.add('hidden');
+            renderSavedBillers(); // Render billers when switching to this tab
+        });
+
+        // Initial render of billers when the page loads
+        document.addEventListener('DOMContentLoaded', renderSavedBillers);
+    </script>
+</body>
+</html>

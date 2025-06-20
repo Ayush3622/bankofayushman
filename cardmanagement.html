@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Card Management</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Card styling for individual cards and action sections */
+        .card-item {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid; /* For colored left border */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* Specific colors for card item borders */
+        .border-credit-card { border-color: #8B5CF6; } /* Purple */
+        .border-debit-card { border-color: #3B82F6; } /* Blue */
+        .border-virtual-card { border-color: #10B981; } /* Green */
+
+        /* Status badge styling */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem; /* px-3 py-0.5 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500; /* font-medium */
+            line-height: 1;
+        }
+        .status-active { background-color: #dcfce7; color: #16a34a; } /* green-100, green-700 */
+        .status-frozen { background-color: #fef9c3; color: #b45309; } /* yellow-100, amber-700 */
+        .status-lost { background-color: #fee2e2; color: #dc2626; } /* red-100, red-700 */
+        .status-virtual { background-color: #d1fae5; color: #059669; } /* teal-100, teal-700 */
+
+        /* Action button style */
+        .action-button-style {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            text-align: center;
+            color: #4b5563; /* text-gray-700 */
+            font-weight: 500; /* font-medium */
+        }
+        .action-button-style:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* hover:shadow-lg */
+            transform: translateY(-2px);
+            color: #2563eb; /* hover:text-blue-700 */
+            background-color: #eff6ff; /* hover:bg-blue-50 */
+        }
+        .action-button-style svg {
+            width: 2.5rem; /* w-10 */
+            height: 2.5rem; /* h-10 */
+            margin-bottom: 0.5rem; /* mb-2 */
+            color: #60a5fa; /* text-blue-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content Area - Full width -->
+<div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Card Management
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Cards</h2>
+
+                <!-- Card List -->
+                <div id="card-list" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Credit Card -->
+                    <div class="card-item border-l-4 border-credit-card" data-card-id="credit-1234" data-card-status="active">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                                <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                MyBank Visa Credit Card
+                            </h3>
+                            <span class="status-badge status-active" data-status-text="Active">Active</span>
+                        </div>
+                        <p class="text-gray-600 mb-1">Card Number: **** **** **** 1234</p>
+                        <p class="text-gray-600 mb-1">Expiry Date: 12/26</p>
+                        <p class="text-gray-600 mb-4">Credit Limit: $5,000.00 | Available: $4,249.50</p>
+                        <div class="flex justify-end space-x-3">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-blue-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm toggle-freeze" data-status="active">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z"></path></svg>
+                                Freeze Card
+                            </button>
+                            <a href="history.html" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM9 16H6a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v2m-6 2h6m-6 4v3m0-3h-3m3 0h3m-6 4v-3m0 3h3m0-3h3"></path></svg>
+                                View Transactions
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Debit Card -->
+                    <div class="card-item border-l-4 border-debit-card" data-card-id="debit-5678" data-card-status="active">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                                <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2V7a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                                MyBank Debit Card
+                            </h3>
+                            <span class="status-badge status-active" data-status-text="Active">Active</span>
+                        </div>
+                        <p class="text-gray-600 mb-1">Card Number: **** **** **** 5678</p>
+                        <p class="text-gray-600 mb-1">Valid Thru: 08/28</p>
+                        <p class="text-gray-600 mb-4">Linked Account: Checking (**** 1234)</p>
+                        <div class="flex justify-end space-x-3">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-blue-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm toggle-freeze" data-status="active">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z"></path></svg>
+                                Freeze Card
+                            </button>
+                            <a href="history.html" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM9 16H6a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v2m-6 2h6m-6 4v3m0-3h-3m3 0h3m-6 4v-3m0 3h3m0-3h3"></path></svg>
+                                View Transactions
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Virtual Card -->
+                    <div class="card-item border-l-4 border-virtual-card" data-card-id="virtual-9012" data-card-status="virtual">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                                <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-1.25-3M15 10V5a2 2 0 00-2-2H9a2 2 0 00-2 2v5m3 4H7a2 2 0 00-2 2v4a2 2 0 002 2h6a2 2 0 002-2v-4a2 2 0 00-2-2z"></path></svg>
+                                MyBank Virtual Card
+                            </h3>
+                            <span class="status-badge status-virtual" data-status-text="Virtual">Virtual</span>
+                        </div>
+                        <p class="text-gray-600 mb-1">Card Number: **** **** **** 9012</p>
+                        <p class="text-gray-600 mb-1">Issued For: Online Purchases</p>
+                        <p class="text-gray-600 mb-4">Linked Account: Checking (**** 1234)</p>
+                        <div class="flex justify-end space-x-3">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                Reveal Details
+                            </button>
+                            <button class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-3 rounded-md transition-all-fast text-sm">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                Delete Virtual Card
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Quick Card Actions -->
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Quick Card Actions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <button class="action-button-style" onclick="alert('PIN Change / Set PIN functionality will be here.')">
+                        <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2v5a2 2 0 01-2 2h-3a2 2 0 01-2-2V9a2 2 0 012-2h3zm0 0V5a2 2 0 00-2-2h-3a2 2 0 00-2 2v2m7 14l-3-3m0 0l-3 3m3-3v3m2-14H8a2 2 0 00-2 2v9a2 2 0 002 2h7a2 2 0 002-2V9a2 2 0 00-2-2z"></path></svg>
+                        Set / Change PIN
+                    </button>
+                    <button class="action-button-style" onclick="handleReportLostStolen()">
+                        <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        Report Lost/Stolen
+                    </button>
+                    <button class="action-button-style" onclick="alert('Requesting Card Replacement functionality will be here.')">
+                        <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7h1.086c.352 0 .686.182.863.491l2.792 4.092a1 1 0 010 1.054l-2.792 4.091a1 1 0 01-.863.491H3a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2z"></path></svg>
+                        Request Replacement
+                    </button>
+                    <button class="action-button-style" onclick="alert('Create Virtual Card functionality will be here.')">
+                        <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-1.25-3M15 10V5a2 2 0 00-2-2H9a2 2 0 00-2 2v5m3 4H7a2 2 0 00-2 2v4a2 2 0 002 2h6a2 2 0 002-2v-4a2 2 0 00-2-2z"></path></svg>
+                        Create Virtual Card
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data structure for cards
+        const userCards = [
+            { id: 'credit-1234', type: 'credit', number: '**** **** **** 1234', expiry: '12/26', limit: '5,000.00', available: '4,249.50', status: 'active', borderColor: 'border-credit-card' },
+            { id: 'debit-5678', type: 'debit', number: '**** **** **** 5678', validThru: '08/28', linkedAccount: 'Checking (**** 1234)', status: 'active', borderColor: 'border-debit-card' },
+            { id: 'virtual-9012', type: 'virtual', number: '**** **** **** 9012', issuedFor: 'Online Purchases', linkedAccount: 'Checking (**** 1234)', status: 'virtual', borderColor: 'border-virtual-card' }
+        ];
+
+        // Function to update card status visually
+        function updateCardStatus(cardElement, newStatus) {
+            const statusBadge = cardElement.querySelector('.status-badge');
+            const toggleFreezeButton = cardElement.querySelector('.toggle-freeze');
+
+            // Update data attribute
+            cardElement.dataset.cardStatus = newStatus;
+
+            // Remove all existing status classes
+            statusBadge.classList.remove('status-active', 'status-frozen', 'status-lost', 'status-virtual');
+
+            // Apply new status classes and text
+            if (newStatus === 'active') {
+                statusBadge.classList.add('status-active');
+                statusBadge.textContent = 'Active';
+                if (toggleFreezeButton) {
+                    toggleFreezeButton.textContent = 'Freeze Card';
+                    toggleFreezeButton.dataset.status = 'active';
+                    toggleFreezeButton.querySelector('svg path').setAttribute('d', 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z');
+                }
+            } else if (newStatus === 'frozen') {
+                statusBadge.classList.add('status-frozen');
+                statusBadge.textContent = 'Frozen';
+                if (toggleFreezeButton) {
+                    toggleFreezeButton.textContent = 'Unfreeze Card';
+                    toggleFreezeButton.dataset.status = 'frozen';
+                    toggleFreezeButton.querySelector('svg path').setAttribute('d', 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'); // Icon for unfreeze
+                }
+            } else if (newStatus === 'lost') {
+                statusBadge.classList.add('status-lost');
+                statusBadge.textContent = 'Lost/Stolen';
+                if (toggleFreezeButton) { // Hide freeze button if reported lost
+                    toggleFreezeButton.style.display = 'none';
+                }
+            }
+            // Virtual cards have a fixed 'virtual' status and no freeze button
+            // This example assumes virtual card status won't be changed by the freeze toggle
+            else if (newStatus === 'virtual') {
+                 statusBadge.classList.add('status-virtual');
+                 statusBadge.textContent = 'Virtual';
+            }
+
+            console.log(`Card ${cardElement.dataset.cardId} status changed to: ${newStatus}`);
+            // In a real app, you would send this status update to your backend
+        }
+
+        // Event listener for Freeze/Unfreeze button
+        document.querySelectorAll('.toggle-freeze').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const cardItem = event.target.closest('.card-item');
+                const currentStatus = cardItem.dataset.cardStatus;
+                if (currentStatus === 'active') {
+                    if (confirm('Are you sure you want to freeze this card? Transactions will be blocked.')) {
+                        updateCardStatus(cardItem, 'frozen');
+                    }
+                } else if (currentStatus === 'frozen') {
+                    if (confirm('Are you sure you want to unfreeze this card? It will become active again.')) {
+                        updateCardStatus(cardItem, 'active');
+                    }
+                }
+            });
+        });
+
+        // Handle Report Lost/Stolen action
+        function handleReportLostStolen() {
+            const cardId = prompt('Please enter the last 4 digits of the card you want to report as lost/stolen:');
+            if (cardId) {
+                const cardElement = document.querySelector(`.card-item[data-card-id$="${cardId}"]`);
+                if (cardElement) {
+                    if (confirm(`Are you sure you want to report card **** ${cardId} as lost/stolen? This action cannot be undone.`)) {
+                        updateCardStatus(cardElement, 'lost');
+                        alert(`Card **** ${cardId} has been reported as lost/stolen.`);
+                    }
+                } else {
+                    alert('Card not found. Please check the last 4 digits.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

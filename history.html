@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Transaction History</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content Area - Full width -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Transaction History
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-6xl mx-auto">
+                <!-- Filters and Actions -->
+                <section class="mb-6 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Filter & Search Transactions</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <input type="date" id="startDate" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                            <input type="date" id="endDate" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="transactionType" class="block text-sm font-medium text-gray-700">Type</label>
+                            <select id="transactionType" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="">All Types</option>
+                                <option value="debit">Debit</option>
+                                <option value="credit">Credit</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="searchDescription" class="block text-sm font-medium text-gray-700">Search Description</label>
+                            <input type="text" id="searchDescription" placeholder="e.g., Amazon, Salary"
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="col-span-1 md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 justify-end">
+                            <button id="applyFilters" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all-fast">
+                                Apply Filters
+                            </button>
+                            <button id="resetFilters" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-all-fast">
+                                Reset Filters
+                            </button>
+                            <button id="exportTransactions" class="px-6 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all-fast">
+                                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Transaction Table -->
+                <section>
+                    <div class="bg-white rounded-lg shadow-md p-6 overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-lg">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tr-lg">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Dummy Transaction Rows - More comprehensive data -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-18</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Online Subscription - Streaming Service</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$15.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,374.77</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Grocery Store - FreshFoods</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$82.30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,390.76</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Online Purchase - Amazon</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$59.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,473.06</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-16</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Salary Deposit - Employer</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Savings</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Credit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">+$2,500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$42,100.20</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Restaurant - Local Diner</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$35.50</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,533.05</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ATM Withdrawal - Downtown Branch</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$100.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,568.55</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Utility Bill - Electricity</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$85.20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,668.55</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Direct Deposit - Freelance Work</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Credit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">+$750.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,753.75</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Coffee Shop - Daily Grind</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Credit Card</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$5.75</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-$756.25</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rent Payment</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Checking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">Debit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$1,200.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$15,003.75</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-06-09</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Investment Dividend</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Savings</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">Credit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">+$50.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$42,150.20</td>
+                                </tr>
+                                <!-- More dummy data can be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Pagination Placeholder (Optional - can add full JS logic later) -->
+                <div class="flex justify-center mt-6">
+                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Previous</span>
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</a>
+                        <a href="#" class="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</a>
+                        <a href="#" class="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">3</a>
+                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Next</span>
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript for Filter and Export Actions (Frontend placeholder)
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const resetFiltersBtn = document.getElementById('resetFilters');
+        const exportTransactionsBtn = document.getElementById('exportTransactions');
+
+        if (applyFiltersBtn) {
+            applyFiltersBtn.addEventListener('click', () => {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                const transactionType = document.getElementById('transactionType').value;
+                const searchDescription = document.getElementById('searchDescription').value;
+
+                const filters = {
+                    startDate,
+                    endDate,
+                    transactionType,
+                    searchDescription
+                };
+                console.log('Applying filters:', filters);
+                // In a real app, you would send these filters to the backend
+                // and update the transaction table with fetched data.
+                alert('Filters applied! (Check console for filter data). In a real app, this would refresh the table.');
+            });
+        }
+
+        if (resetFiltersBtn) {
+            resetFiltersBtn.addEventListener('click', () => {
+                document.getElementById('startDate').value = '';
+                document.getElementById('endDate').value = '';
+                document.getElementById('transactionType').value = '';
+                document.getElementById('searchDescription').value = '';
+                console.log('Filters reset.');
+                // In a real app, you would re-fetch all transactions without filters.
+                alert('Filters reset! In a real app, this would show all transactions.');
+            });
+        }
+
+        if (exportTransactionsBtn) {
+            exportTransactionsBtn.addEventListener('click', () => {
+                console.log('Exporting transactions...');
+                // In a real app, this would trigger a backend process to generate and download a file.
+                alert('Export initiated! In a real app, a file would be downloaded shortly.');
+            });
+        }
+    </script>
+</body>
+</html>

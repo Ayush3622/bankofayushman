@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Loans</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+            flex-direction: column; /* Stack content vertically */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content Area - now the primary container -->
+   <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Loan Management
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Existing Loans Section -->
+                <section class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Current Loans</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Loan Card 1 -->
+                        <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg shadow-sm p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Personal Loan</h3>
+                            <p class="text-sm text-gray-600 mb-1">Loan ID: PL-2023-001</p>
+                            <p class="text-gray-700 text-lg mb-2"><span class="font-bold">$10,000.00</span> remaining</p>
+                            <p class="text-sm text-gray-600 mb-1">Monthly Payment: <span class="font-semibold">$250.00</span></p>
+                            <p class="text-sm text-gray-600 mb-4">Next Due Date: <span class="font-semibold">2025-07-01</span></p>
+                            <div class="flex justify-end">
+                                <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all-fast shadow-sm">
+                                    Make Payment
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loan Card 2 (Example of a paid off loan or different type) -->
+                        <div class="bg-green-50 border-l-4 border-green-500 rounded-lg shadow-sm p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Auto Loan</h3>
+                            <p class="text-sm text-gray-600 mb-1">Loan ID: AL-2022-005</p>
+                            <p class="text-gray-700 text-lg mb-2"><span class="font-bold">$0.00</span> remaining</p>
+                            <p class="text-sm text-green-700 font-semibold mb-4">Paid in full!</p>
+                            <div class="flex justify-end">
+                                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md cursor-not-allowed" disabled>
+                                    No Payment Due
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- No loans message (hidden by default, shown by JS if no loans) -->
+                        <div id="noLoansMessage" class="col-span-full text-center p-8 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                            <p class="text-lg text-gray-600">You currently have no active loans.</p>
+                            <button id="applyForNewLoanBtn" class="mt-4 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all-fast shadow-md">
+                                Apply for a New Loan
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Apply for New Loan Section -->
+                <section class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Apply for a New Loan</h2>
+
+                    <form id="loanApplicationForm" class="space-y-6">
+                        <div>
+                            <label for="loanType" class="block text-sm font-medium text-gray-700">Loan Type</label>
+                            <select id="loanType" name="loanType" required
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="">Select a loan type</option>
+                                <option value="personal">Personal Loan</option>
+                                <option value="auto">Auto Loan</option>
+                                <option value="home">Home Loan</option>
+                                <option value="education">Education Loan</option>
+                            </select>
+                            <p id="loanTypeError" class="text-red-500 text-xs mt-1 hidden">Please select a loan type.</p>
+                        </div>
+
+                        <div>
+                            <label for="loanAmount" class="block text-sm font-medium text-gray-700">Desired Loan Amount</label>
+                            <input type="number" id="loanAmount" name="loanAmount" required step="100" min="1000"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                   placeholder="e.g., 5000">
+                            <p id="loanAmountError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid loan amount (min $1000).</p>
+                        </div>
+
+                        <div>
+                            <label for="loanTerm" class="block text-sm font-medium text-gray-700">Loan Term (in months)</label>
+                            <input type="number" id="loanTerm" name="loanTerm" required min="6" max="120"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                   placeholder="e.g., 24">
+                            <p id="loanTermError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid loan term (6-120 months).</p>
+                        </div>
+
+                        <div>
+                            <label for="purpose" class="block text-sm font-medium text-gray-700">Purpose of Loan</label>
+                            <textarea id="purpose" name="purpose" rows="3" required
+                                      class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                      placeholder="Briefly describe why you need this loan..."></textarea>
+                            <p id="purposeError" class="text-red-500 text-xs mt-1 hidden">Please provide a purpose for the loan.</p>
+                        </div>
+
+                        <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all-fast">
+                            Submit Loan Application
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Confirmation Modal (hidden by default) -->
+                <div id="confirmationModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+                    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md mx-4 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Confirm Loan Application</h3>
+                        <p class="text-gray-700 mb-6">Please review your application details before submitting.</p>
+                        
+                        <div class="bg-gray-50 p-4 rounded-md mb-6 text-left">
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">Loan Type:</span> <span id="confirmLoanType"></span></p>
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">Amount:</span> <span id="confirmLoanAmount" class="font-bold text-blue-700 text-lg"></span></p>
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold">Term:</span> <span id="confirmLoanTerm"></span> months</p>
+                            <p class="text-sm text-gray-600"><span class="font-semibold">Purpose:</span> <span id="confirmPurpose"></span></p>
+                        </div>
+
+                        <div class="flex justify-end space-x-4">
+                            <button id="cancelLoanApplication" class="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-all-fast">
+                                Cancel
+                            </button>
+                            <button id="confirmLoanProceed" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all-fast">
+                                Confirm & Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success/Error Message Box (hidden by default) -->
+                <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+                    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4 text-center">
+                        <h3 id="messageTitle" class="text-2xl font-bold text-gray-800 mb-4"></h3>
+                        <p id="messageText" class="text-gray-700 mb-6"></p>
+                        <button id="closeMessage" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all-fast">
+                            Close
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Loan Management Specific JavaScript ---
+        const loanApplicationForm = document.getElementById('loanApplicationForm');
+        const loanTypeSelect = document.getElementById('loanType');
+        const loanAmountInput = document.getElementById('loanAmount');
+        const loanTermInput = document.getElementById('loanTerm');
+        const purposeTextarea = document.getElementById('purpose');
+
+        const loanTypeError = document.getElementById('loanTypeError');
+        const loanAmountError = document.getElementById('loanAmountError');
+        const loanTermError = document.getElementById('loanTermError');
+        const purposeError = document.getElementById('purposeError');
+
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmLoanType = document.getElementById('confirmLoanType');
+        const confirmLoanAmount = document.getElementById('confirmLoanAmount');
+        const confirmLoanTerm = document.getElementById('confirmLoanTerm');
+        const confirmPurpose = document.getElementById('confirmPurpose');
+        const cancelLoanApplicationBtn = document.getElementById('cancelLoanApplication');
+        const confirmLoanProceedBtn = document.getElementById('confirmLoanProceed');
+
+        const messageBox = document.getElementById('messageBox');
+        const messageTitle = document.getElementById('messageTitle');
+        const messageText = document.getElementById('messageText');
+        const closeMessageBtn = document.getElementById('closeMessage');
+
+        // Form Submission Handler
+        loanApplicationForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Hide all error messages initially
+            [loanTypeError, loanAmountError, loanTermError, purposeError].forEach(el => el.classList.add('hidden'));
+
+            let isValid = true;
+
+            // Validate Loan Type
+            if (!loanTypeSelect.value) {
+                loanTypeError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Loan Amount
+            const loanAmount = parseFloat(loanAmountInput.value);
+            if (isNaN(loanAmount) || loanAmount < 1000) {
+                loanAmountError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Loan Term
+            const loanTerm = parseInt(loanTermInput.value);
+            if (isNaN(loanTerm) || loanTerm < 6 || loanTerm > 120) {
+                loanTermError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Purpose
+            if (!purposeTextarea.value.trim()) {
+                purposeError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Populate confirmation modal
+                confirmLoanType.textContent = loanTypeSelect.options[loanTypeSelect.selectedIndex].text;
+                confirmLoanAmount.textContent = `$${loanAmount.toFixed(2)}`;
+                confirmLoanTerm.textContent = loanTerm;
+                confirmPurpose.textContent = purposeTextarea.value.trim();
+
+                confirmationModal.classList.remove('hidden');
+            }
+        });
+
+        // Confirmation Modal Buttons
+        cancelLoanApplicationBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+        });
+
+        confirmLoanProceedBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+            // Simulate successful loan application for frontend
+            showMessage('Application Submitted!', 'Your loan application has been submitted and is under review. We will contact you soon.', 'success');
+            // In a real app, this is where you'd send the actual loan application to the backend
+            const formData = {
+                loanType: loanTypeSelect.value,
+                loanAmount: parseFloat(loanAmountInput.value),
+                loanTerm: parseInt(loanTermInput.value),
+                purpose: purposeTextarea.value.trim()
+            };
+            console.log('Loan Application Data (simulated):', formData);
+            loanApplicationForm.reset(); // Clear form after "submission"
+        });
+
+        closeMessageBtn.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+        });
+
+        function showMessage(title, text, type = 'success') {
+            messageTitle.textContent = title;
+            messageText.textContent = text;
+            messageTitle.classList.remove('text-green-700', 'text-red-700'); // Clear previous colors
+            messageText.classList.remove('text-green-700', 'text-red-700');
+
+            if (type === 'success') {
+                messageTitle.classList.add('text-green-700');
+                messageText.classList.add('text-green-700');
+            } else if (type === 'error') {
+                messageTitle.classList.add('text-red-700');
+                messageText.classList.add('text-red-700');
+            }
+            messageBox.classList.remove('hidden');
+        }
+
+    </script>
+</body>
+</html>

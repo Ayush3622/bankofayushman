@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Recent Alerts</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Card styling for alert items */
+        .alert-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1rem; /* Spacing between cards */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .alert-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* Alert type specific borders */
+        .border-security { border-left-color: #ef4444; } /* Red */
+        .border-transaction { border-left-color: #3b82f6; } /* Blue */
+        .border-system { border-left-color: #6b7280; } /* Gray */
+        .border-promotional { border-left-color: #10b981; } /* Green */
+
+        /* Alert status badge colors */
+        .badge-new { background-color: #f97316; color: #ffffff; } /* Orange */
+        .badge-unread { background-color: #3b82f6; color: #ffffff; } /* Blue */
+        .badge-read { background-color: #e5e7eb; color: #4b5563; } /* Light Gray */
+        .badge-critical { background-color: #ef4444; color: #ffffff; } /* Red */
+        .badge-info { background-color: #6b7280; color: #ffffff; } /* Dark Gray */
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content Area - Full width -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Recent Alerts
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Recent Notifications</h2>
+
+                <!-- Alerts List -->
+                <div id="alerts-list">
+                    <!-- Security Alert -->
+                    <div class="alert-card border-l-4 border-security">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                <h3 class="text-lg font-semibold text-gray-800">Unusual Login Activity</h3>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium badge-critical">Critical</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">
+                            We detected a login from a new device/location on June 18, 2025, at 10:30 AM IST.
+                            If this wasn't you, please secure your account immediately.
+                        </p>
+                        <div class="flex items-center justify-between text-gray-500 text-xs">
+                            <span>June 18, 2025, 10:30 AM IST</span>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium">View Details</button>
+                                <button class="text-red-600 hover:text-red-800 font-medium dismiss-alert">Dismiss</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Alert -->
+                    <div class="alert-card border-l-4 border-transaction">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM9 16H6a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v2m-6 2h6m-6 4v3m0-3h-3m3 0h3m-6 4v-3m0 3h3m0-3h3"></path></svg>
+                                <h3 class="text-lg font-semibold text-gray-800">Large Transaction Alert</h3>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium badge-unread">Unread</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">
+                            A transaction of $500.00 was made from your Checking Account to "Online Shopping" on June 17, 2025.
+                        </p>
+                        <div class="flex items-center justify-between text-gray-500 text-xs">
+                            <span>June 17, 2025, 03:15 PM IST</span>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium">View Transaction</button>
+                                <button class="text-gray-600 hover:text-gray-800 font-medium mark-as-read">Mark as Read</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Alert -->
+                    <div class="alert-card border-l-4 border-system">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V9a1 1 0 00-1-1H4a1 1 0 00-1 1v7m7 0h4m-4 0v-4"></path></svg>
+                                <h3 class="text-lg font-semibold text-gray-800">System Maintenance Notice</h3>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium badge-info">Info</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Scheduled system maintenance will occur on June 20, 2025, from 2:00 AM to 4:00 AM IST.
+                            Online services may be temporarily unavailable.
+                        </p>
+                        <div class="flex items-center justify-between text-gray-500 text-xs">
+                            <span>June 16, 2025, 09:00 AM IST</span>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium">Learn More</button>
+                                <button class="text-gray-600 hover:text-gray-800 font-medium mark-as-read">Mark as Read</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Promotional Alert (New) -->
+                    <div class="alert-card border-l-4 border-promotional">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                <h3 class="text-lg font-semibold text-gray-800">New Loan Offer Available!</h3>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium badge-new">New</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Discover our new low-interest personal loan options. Apply today and get instant approval!
+                        </p>
+                        <div class="flex items-center justify-between text-gray-500 text-xs">
+                            <span>June 19, 2025, 11:00 AM IST</span>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium">View Offer</button>
+                                <button class="text-gray-600 hover:text-gray-800 font-medium mark-as-read">Mark as Read</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript for marking alerts as read or dismissing them (client-side simulation)
+        document.addEventListener('click', (event) => {
+            if (event.target.classList.contains('mark-as-read')) {
+                const alertCard = event.target.closest('.alert-card');
+                if (alertCard) {
+                    // Change border color to signify read, or add a 'read' class
+                    alertCard.classList.remove('border-transaction', 'border-system', 'border-promotional', 'border-security');
+                    alertCard.classList.add('border-gray-400'); // Example: grey out border
+
+                    // Update badge text and color
+                    const badge = alertCard.querySelector('.badge-unread, .badge-new, .badge-info, .badge-critical');
+                    if (badge) {
+                        badge.classList.remove('badge-unread', 'badge-new', 'badge-critical', 'badge-info');
+                        badge.classList.add('badge-read');
+                        badge.textContent = 'Read';
+                    }
+                    // Optionally, remove the 'Mark as Read' button
+                    event.target.remove(); 
+                }
+            } else if (event.target.classList.contains('dismiss-alert')) {
+                const alertCard = event.target.closest('.alert-card');
+                if (alertCard) {
+                    alertCard.style.opacity = '0';
+                    alertCard.style.height = '0';
+                    alertCard.style.overflow = 'hidden';
+                    alertCard.style.margin = '0';
+                    alertCard.style.padding = '0';
+                    alertCard.style.border = 'none';
+                    alertCard.style.boxShadow = 'none';
+                    // Remove the element completely after animation (optional, for real cleanup)
+                    setTimeout(() => {
+                        alertCard.remove();
+                    }, 500); // Match transition duration
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Credit Score</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Card styling for sections */
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem; /* Spacing between cards */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border-left: 4px solid #3b82f6; /* Default blue border for sections */
+        }
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* Credit Score Display Circle */
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Score based colors */
+        .score-poor { background: linear-gradient(135deg, #ef4444, #dc2626); } /* red-500 to red-700 */
+        .score-fair { background: linear-gradient(135deg, #f97316, #ea580c); } /* orange-500 to orange-600 */
+        .score-good { background: linear-gradient(135deg, #3b82f6, #2563eb); } /* blue-500 to blue-700 */
+        .score-excellent { background: linear-gradient(135deg, #22c55e, #16a34a); } /* green-500 to green-700 */
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content Area - Full width -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Credit Score
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Credit Score Overview</h2>
+
+                <!-- Credit Score Display Section -->
+                <div class="section-card flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                    <div class="flex flex-col items-center flex-shrink-0">
+                        <div id="credit-score-circle" class="score-circle score-good">
+                            <span class="text-5xl">720</span>
+                            <span class="text-sm">Good</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mt-3">Last Updated: <span id="score-last-updated">June 19, 2025</span></p>
+                    </div>
+
+                    <div class="flex-grow text-center md:text-left">
+                        <p class="text-gray-600 text-lg mb-2">Your score has <span class="text-green-600 font-semibold">increased by 5 points</span> since last month.</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            A good credit score indicates responsible financial behavior. This can help you get better rates on loans, credit cards, and mortgages.
+                            Continue to manage your credit wisely to maintain or improve your score.
+                        </p>
+                        <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-4">
+                            <button onclick="alert('Generating full credit report...')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-2m-6 10H4a2 2 0 01-2-2V7a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-6l-2 2h-2z"></path></svg>
+                                Get Full Credit Report
+                            </button>
+                            <button onclick="alert('Navigating to credit improvement tips.')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-md transition-all-fast flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V9a1 1 0 00-1-1H4a1 1 0 00-1 1v7m7 0h4m-4 0v-4"></path></svg>
+                                Improve My Score
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factors Affecting Your Score -->
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 mt-8">Factors Affecting Your Score</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="section-card border-left-color: #22c55e;"> <!-- Payment History (Good) -->
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.001 12.001 0 002.923 12c0 3.072 1.578 5.762 3.919 7.329a12.001 12.001 0 0014.167 0c2.341-1.567 3.919-4.257 3.919-7.329C21.077 7.944 17.136 4.016 12 4.016z"></path></svg>
+                            Payment History <span class="text-green-600 ml-2">(Excellent)</span>
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            Always making payments on time is the most important factor for a good credit score.
+                            Keep up the great work!
+                        </p>
+                    </div>
+                    <div class="section-card border-left-color: #f97316;"> <!-- Credit Utilization (Fair) -->
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            Credit Utilization <span class="text-orange-600 ml-2">(Fair)</span>
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            You are using 45% of your available credit. Aim to keep this below 30% for a better score.
+                            Consider paying down balances or requesting a credit limit increase.
+                        </p>
+                    </div>
+                    <div class="section-card border-left-color: #3b82f6;"> <!-- Length of Credit History (Good) -->
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Length of Credit History <span class="text-blue-600 ml-2">(Good)</span>
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            Your oldest account is 8 years old. A longer credit history generally benefits your score.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Credit Score Trend (Simplified) -->
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 mt-8">Credit Score Trend (Last 6 Months)</h2>
+                <div class="section-card p-0 overflow-hidden">
+                    <div class="px-6 py-4">
+                        <p class="text-gray-600 text-sm mb-4">Here's how your score has changed recently:</p>
+                        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 text-center">
+                            <div class="flex flex-col items-center">
+                                <span class="text-lg font-bold text-green-600">+5</span>
+                                <span class="text-3xl font-extrabold text-gray-800">720</span>
+                                <span class="text-xs text-gray-500">June</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-lg font-bold text-gray-600">0</span>
+                                <span class="text-3xl font-extrabold text-gray-800">715</span>
+                                <span class="text-xs text-gray-500">May</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-lg font-bold text-red-600">-3</span>
+                                <span class="text-3xl font-extrabold text-gray-800">715</span>
+                                <span class="text-xs text-gray-500">April</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-lg font-bold text-green-600">+8</span>
+                                <span class="text-3xl font-extrabold text-gray-800">718</span>
+                                <span class="text-xs text-gray-500">March</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-lg font-bold text-gray-600">0</span>
+                                <span class="text-3xl font-extrabold text-gray-800">710</span>
+                                <span class="text-xs text-gray-500">February</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <span class="text-lg font-bold text-green-600">+2</span>
+                                <span class="text-3xl font-extrabold text-gray-800">710</span>
+                                <span class="text-xs text-gray-500">January</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data for the credit score display
+        const currentCreditScore = 720;
+        const scoreCircle = document.getElementById('credit-score-circle');
+        const scoreLastUpdated = document.getElementById('score-last-updated');
+
+        // Function to determine score category and apply color
+        function updateScoreDisplay() {
+            let category = '';
+            let colorClass = '';
+
+            if (currentCreditScore >= 740) {
+                category = 'Excellent';
+                colorClass = 'score-excellent';
+            } else if (currentCreditScore >= 670) {
+                category = 'Good';
+                colorClass = 'score-good';
+            } else if (currentCreditScore >= 580) {
+                category = 'Fair';
+                colorClass = 'score-fair';
+            } else {
+                category = 'Poor';
+                colorClass = 'score-poor';
+            }
+
+            scoreCircle.className = `score-circle ${colorClass}`;
+            scoreCircle.querySelector('span:first-child').textContent = currentCreditScore;
+            scoreCircle.querySelector('span:last-child').textContent = category;
+
+            // Set last updated date to today's date
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            scoreLastUpdated.textContent = today.toLocaleDateString('en-US', options);
+        }
+
+        // Initial update on page load
+        document.addEventListener('DOMContentLoaded', updateScoreDisplay);
+    </script>
+</body>
+</html>

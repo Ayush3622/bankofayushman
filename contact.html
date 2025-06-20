@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - MyBank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom animation keyframes for hero text, consistent with other pages */
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in-scale-up { animation: fadeInScaleUp 0.8s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .delay-200 { animation-delay: 0.2s; }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800 antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-900">MyBank</a>
+
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Home</a></li>
+                <li><a href="personal.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Personal</a></li>
+                <li><a href="business.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">Business</a></li>
+                <li><a href="about.html" class="text-gray-600 hover:text-blue-700 font-semibold transition duration-300">About</a></li>
+            </ul>
+
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="text-blue-700 hover:text-blue-800 font-semibold py-2 px-4 rounded-md transition duration-300">Login</a>
+                <a href="register.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-20">
+        <div class="container mx-auto px-4 md:px-6 lg:px-8 max-w-4xl">
+            <section class="mb-16 text-center py-16 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl shadow-md border border-purple-200">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-purple-800 mb-6 animate-fade-in-scale-up">
+                    Get In Touch With MyBank
+                </h1>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-4 animate-fade-in delay-200">
+                    We're here to help! Reach out to us through the following channels.
+                </p>
+            </section>
+
+            <section class="bg-white shadow-lg rounded-xl p-8 md:p-10 border border-gray-100 mb-12">
+                <h2 class="text-3xl font-bold text-blue-700 mb-8 pb-2 border-b border-gray-200 text-center">Contact Information</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6 bg-blue-50 rounded-lg shadow-sm border border-blue-100">
+                        <div class="text-4xl mb-4">📞</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Phone Support</h3>
+                        <p class="text-gray-700">General Inquiries:</p>
+                        <p class="text-blue-600 font-medium text-lg">+91-98765-43210</p>
+                        <p class="text-gray-700 mt-3">24/7 Fraud & Disputes:</p>
+                        <p class="text-blue-600 font-medium text-lg">+91-12345-67890</p>
+                        <p class="text-sm text-gray-500 mt-4">Available M-F, 9 AM - 6 PM IST (General)</p>
+                    </div>
+
+                    <div class="p-6 bg-green-50 rounded-lg shadow-sm border border-green-100">
+                        <div class="text-4xl mb-4">📧</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Email Us</h3>
+                        <p class="text-gray-700">General Support:</p>
+                        <p class="text-green-600 font-medium text-lg break-all">support@mybank.com</p>
+                        <p class="text-gray-700 mt-3">Business Inquiries:</p>
+                        <p class="text-green-600 font-medium text-lg break-all">business@mybank.com</p>
+                        <p class="text-sm text-gray-500 mt-4">We aim to respond within 24-48 hours.</p>
+                    </div>
+
+                    <div class="p-6 bg-purple-50 rounded-lg shadow-sm border border-purple-100">
+                        <div class="text-4xl mb-4">📍</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Our Headquarters</h3>
+                        <p class="text-gray-700">MyBank Financial Centre</p>
+                        <p class="text-gray-700">123 Financial Lane</p>
+                        <p class="text-gray-700">Business District, Kolkata</p>
+                        <p class="text-gray-700">West Bengal, India, 700001</p>
+                        <p class="text-sm text-gray-500 mt-4">Visits by appointment only.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white shadow-lg rounded-xl p-8 md:p-10 border border-gray-100 mb-12">
+                <h2 class="text-3xl font-bold text-blue-700 mb-8 pb-2 border-b border-gray-200 text-center">General Inquiries</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6 text-center">
+                    For specific questions or to send us a message, you can reach out via email directly. Please provide as much detail as possible.
+                </p>
+                <div class="text-center">
+                    <p class="text-xl font-semibold text-gray-800 mb-4">How to send us a message:</p>
+                    <ol class="list-decimal list-inside text-gray-700 leading-relaxed space-y-2 max-w-md mx-auto text-left">
+                        <li>Prepare your email with all necessary details (your name, account number if applicable, nature of inquiry).</li>
+                        <li>Send it to <a href="mailto:support@mybank.com" class="text-blue-600 hover:underline font-medium">support@mybank.com</a>.</li>
+                        <li>Our team will review your message and get back to you as soon as possible.</li>
+                    </ol>
+                    <p class="text-sm text-gray-500 mt-6">
+                        Please do not include sensitive information like full account passwords in your initial email. Our support team will guide you through secure verification processes if needed.
+                    </p>
+                </div>
+            </section>
+
+            <section class="bg-gray-100 shadow-inner rounded-xl p-8 md:p-10 mb-12">
+                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b border-gray-300 text-center">Branch Locations</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6 text-center">
+                    While our headquarters is in Kolkata, MyBank serves customers nationwide. Find a branch near you for in-person assistance.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Kolkata Main Branch</h3>
+                        <p class="text-gray-700">123 Park Street, Kolkata, WB 700016</p>
+                        <p class="text-blue-600">Mon-Sat: 10:00 AM - 4:00 PM</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Mumbai City Branch</h3>
+                        <p class="text-gray-700">456 Bandra Road, Mumbai, MH 400050</p>
+                        <p class="text-blue-600">Mon-Fri: 9:30 AM - 5:30 PM</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Delhi Financial Hub</h3>
+                        <p class="text-gray-700">789 Connaught Place, New Delhi, DL 110001</p>
+                        <p class="text-blue-600">Mon-Sat: 10:00 AM - 6:00 PM</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Bengaluru Tech Park Branch</h3>
+                        <p class="text-gray-700">101 MG Road, Bengaluru, KA 560001</p>
+                        <p class="text-blue-600">Mon-Fri: 9:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-8">
+                    Please call ahead to confirm branch hours and services.
+                </p>
+            </section>
+
+            <section class="py-16 bg-blue-700 text-white rounded-xl text-center shadow-lg">
+                <div class="max-w-xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-6">Need Immediate Assistance?</h2>
+                    <p class="text-xl leading-relaxed mb-8 opacity-90">
+                        Our customer service team is ready to help you with any banking needs.
+                    </p>
+                    <a href="tel:+919876543210" class="inline-block bg-white hover:bg-gray-200 text-blue-700 font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 no-underline">
+                        Call Us Now
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-5 mt-0 text-sm">
+        <p>&copy; 2025 MyBank. All rights reserved.</p>
+        <p class="mt-2">
+            <a href="privacypolicy.html" class="text-white hover:underline mx-2">Privacy Policy</a> |
+            <a href="termsofservice.html" class="text-white hover:underline mx-2">Terms of Service</a> |
+            <a href="contact.html" class="text-white hover:underline mx-2">Contact Us</a>
+        </p>
+    </footer>
+
+</body>
+</html>

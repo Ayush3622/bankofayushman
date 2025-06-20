@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Offers & Rewards</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            cursor: pointer;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Card styling for sections and offers */
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem; /* Spacing between cards */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border-left: 4px solid #3b82f6; /* Default blue border for sections */
+        }
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .offer-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 1.25rem;
+            transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            border: 1px solid #e5e7eb; /* subtle border */
+        }
+        .offer-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Offer type specific styling */
+        .offer-type-discount { border-left: 4px solid #22c55e; } /* green-500 */
+        .offer-type-cashback { border-left: 4px solid #f97316; } /* orange-500 */
+        .offer-type-points { border-left: 4px solid #8b5cf6; } /* purple-500 */
+        .offer-type-exclusive { border-left: 4px solid #ef4444; } /* red-500 */
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content Area - Full width -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Offers & Rewards
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Explore Your Benefits & Rewards</h2>
+
+                <!-- Featured Offers Section -->
+                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.329 1.176l1.519 4.674c.3.921-.755 1.688-1.539 1.175l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.513-1.838-.254-1.539-1.175l1.519-4.674a1 1 0 00-.329-1.176l-3.976-2.888c-.784-.57-.381-1.81.588-1.81h4.915a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                    Featured Offers
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="offer-card offer-type-discount">
+                        <img src="https://placehold.co/400x200/4f46e5/ffffff?text=Travel+Discount" alt="Travel Discount" class="w-full h-32 object-cover rounded-md mb-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">20% Off Holiday Packages</h4>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Plan your next adventure! Enjoy exclusive discounts on international and domestic holiday packages.
+                        </p>
+                        <p class="text-gray-500 text-xs mb-3">Ends: July 31, 2025</p>
+                        <button onclick="alert('Offer redeemed! Check your email for details.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast text-sm w-full">
+                            Redeem Now
+                        </button>
+                    </div>
+                    <div class="offer-card offer-type-cashback">
+                        <img src="https://placehold.co/400x200/dc2626/ffffff?text=Dining+Cashback" alt="Dining Cashback" class="w-full h-32 object-cover rounded-md mb-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">10% Cashback on Dining</h4>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Savor your favorite meals! Get 10% cashback on all dining expenses with your MyBank Credit Card.
+                        </p>
+                        <p class="text-gray-500 text-xs mb-3">Ends: June 30, 2025</p>
+                        <button onclick="alert('Cashback offer activated! Terms and conditions apply.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast text-sm w-full">
+                            Activate Offer
+                        </button>
+                    </div>
+                    <div class="offer-card offer-type-points">
+                        <img src="https://placehold.co/400x200/10b981/ffffff?text=Gadget+Rewards" alt="Gadget Rewards" class="w-full h-32 object-cover rounded-md mb-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Earn 2X Reward Points on Gadgets</h4>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Upgrade your tech! Double your reward points on electronics purchases this month.
+                        </p>
+                        <p class="text-gray-500 text-xs mb-3">Ends: July 15, 2025</p>
+                        <button onclick="alert('Offer applied! Start earning double points.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast text-sm w-full">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cashback & Discounts Section -->
+                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2V7a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                    Cashback & Discounts
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="offer-card offer-type-discount">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Flat $5 Cashback on Bills</h4>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Pay your utility bills through MyBank and get a flat $5 cashback on transactions over $50.
+                        </p>
+                        <p class="text-gray-500 text-xs mb-3">Valid until: Dec 31, 2025</p>
+                        <button onclick="alert('Navigating to Pay Bills page.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast text-sm w-full">
+                            Pay Bills
+                        </button>
+                    </div>
+                    <div class="offer-card offer-type-cashback">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Up to $25 Cashback on Groceries</h4>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Shop smart! Get 5% cashback (up to $25) on your grocery purchases every week.
+                        </p>
+                        <p class="text-gray-500 text-xs mb-3">Active: Every Monday - Sunday</p>
+                        <button onclick="alert('Cashback offer for groceries is always on!')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast text-sm w-full">
+                            Details
+                        </button>
+                    </div>
+                    <div class="offer-card offer-type-discount">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">30% Off on Your First Investment</h4>
+                        <p class="text-gray-600 text-sm mb-3">
+                            Start your investment journey with a special 30% discount on advisory fees for your first investment.
+                        </p>
+                        <p class="text-gray-500 text-xs mb-3">Limited time offer</p>
+                        <button onclick="alert('Navigating to Investment Management page.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast text-sm w-full">
+                            Invest Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Points & Loyalty Programs Section -->
+                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.329 1.176l1.519 4.674c.3.921-.755 1.688-1.539 1.175l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.513-1.838-.254-1.539-1.175l1.519-4.674a1 1 0 00-.329-1.176l-3.976-2.888c-.784-.57-.381-1.81.588-1.81h4.915a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                    Points & Loyalty Programs
+                </h3>
+                <div class="section-card">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">MyBank Rewards Program</h4>
+                    <p class="text-gray-600 text-sm mb-3">
+                        Earn points on every transaction with your eligible MyBank cards. Redeem points for travel, merchandise,
+                        cashback, or gift cards.
+                    </p>
+                    <div class="flex items-center justify-between mt-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Your Current Points:</p>
+                            <p class="text-2xl font-bold text-blue-600">5,480 Points</p>
+                        </div>
+                        <button onclick="alert('Navigating to Rewards Catalog.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast">
+                            Redeem Points
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // No specific JavaScript for dynamic data rendering or advanced interactions for this page yet.
+        // All button clicks are simulated using alert() as requested.
+    </script>
+</body>
+</html>

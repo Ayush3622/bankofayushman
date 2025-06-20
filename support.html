@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank - Customer Support</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Inter, falling back to sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background for the entire page */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for overall layout */
+        }
+
+        /* Custom scrollbar for main content area if needed */
+        .main-content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .main-content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure smooth transitions for various elements */
+        .transition-all-fast {
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Styles for FAQ accordion */
+        .faq-question {
+            cursor: pointer;
+            user-select: none;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: none; /* Hidden by default */
+            animation: slideDown .3s ease-out;
+        }
+
+        /* Simple slide down animation for FAQ answer */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faq-question.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+
+
+   <!-- Main Content Area - now the primary container -->
+     <div class="flex-1 flex flex-col w-full overflow-hidden">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+    
+    <!-- Left Section: Back button -->
+    <div class="order-1 sm:order-none">
+      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+        <!-- Icon only on small screens -->
+        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+        </svg>
+        <!-- Text + icon on larger screens -->
+        <div class="hidden sm:flex items-center font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+          </svg>
+           Dashboard
+        </div>
+      </a>
+    </div>
+
+    <!-- Center Section: Title and Greeting -->
+    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+        Customer Support
+      </h1>
+      
+    </div>
+
+    <!-- Right Section: Notification Icon -->
+    <div class="order-3">
+      <a href="recentalerts.html">
+  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+    </svg>
+  </button>
+</a>
+    </div>
+
+  </header>
+
+
+
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Contact Information Section -->
+                <section class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Need Help? Contact Us!</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div class="p-4 bg-blue-50 rounded-lg shadow-sm border-l-4 border-blue-500 flex flex-col items-center">
+                            <svg class="w-10 h-10 text-blue-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684L10.5 9l2.592-2.592a1 1 0 01.684-.948H19a2 2 0 012 2v10a2 2 0 01-2 2h-3.28a1 1 0 01-.948-.684L13.5 15l-2.592 2.592a1 1 0 01-.684.948H5a2 2 0 01-2-2V5z"></path></svg>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Call Us</h3>
+                            <p class="text-gray-700">1-800-MYBANK-HELP (692-2654)</p>
+                            <p class="text-sm text-gray-500">Available 24/7</p>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg shadow-sm border-l-4 border-green-500 flex flex-col items-center">
+                            <svg class="w-10 h-10 text-green-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-9 13l-9-9V7a2 2 0 012-2h14a2 2 0 012 2v6l-9 9z"></path></svg>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Email Us</h3>
+                            <p class="text-gray-700">support@mybank.com</p>
+                            <p class="text-sm text-gray-500">We'll respond within 24 hours</p>
+                        </div>
+                        <div class="p-4 bg-purple-50 rounded-lg shadow-sm border-l-4 border-purple-500 flex flex-col items-center">
+                            <svg class="w-10 h-10 text-purple-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Live Chat</h3>
+                            <p class="text-gray-700">Available during business hours</p>
+                            <button class="mt-2 px-4 py-2 bg-purple-600 text-white rounded-md text-sm hover:bg-purple-700 transition-all-fast">
+                                Start Chat
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ Section (Accordion Style) -->
+                <section class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Frequently Asked Questions</h2>
+                    <div id="faq-accordion" class="divide-y divide-gray-200">
+                        <!-- FAQ Item 1 -->
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 class="text-lg font-semibold text-gray-800">How do I reset my password?</h3>
+                                <svg class="w-6 h-6 text-gray-500 arrow-icon transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="faq-answer text-gray-700">
+                                <p>You can reset your password by clicking on the "Forgot Password" link on the login page. You will be prompted to enter your email address to receive a password reset link.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 class="text-lg font-semibold text-gray-800">What are your operating hours?</h3>
+                                <svg class="w-6 h-6 text-gray-500 arrow-icon transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="faq-answer text-gray-700">
+                                <p>Our customer support team is available 24/7 for phone calls. Live chat is available Monday to Friday, 9:00 AM - 5:00 PM EST. Our physical branches have varying hours, please check the 'Locations' page for details.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 class="text-lg font-semibold text-gray-800">How can I view my transaction history?</h3>
+                                <svg class="w-6 h-6 text-gray-500 arrow-icon transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="faq-answer text-gray-700">
+                                <p>After logging in, navigate to your Dashboard. You'll see a 'Transactions' link in the sidebar or a 'Recent Transactions' section. Click on the 'Transactions' link for your full history, where you can also apply filters.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 class="text-lg font-semibold text-gray-800">Is my personal information secure?</h3>
+                                <svg class="w-6 h-6 text-gray-500 arrow-icon transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="faq-answer text-gray-700">
+                                <p>MyBank employs advanced encryption and security protocols to protect your personal and financial data. We regularly update our systems to ensure the highest level of security. For more details, please refer to our Privacy Policy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Form Section (Ticket Submission) -->
+                <section class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Submit a Support Request</h2>
+                    <form id="supportForm" class="space-y-6">
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                            <input type="text" id="subject" name="subject" required
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                   placeholder="e.g., Issue with a transfer, Account inquiry">
+                            <p id="subjectError" class="text-red-500 text-xs mt-1 hidden">Please enter a subject.</p>
+                        </div>
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                            <select id="category" name="category" required
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="">Select a category</option>
+                                <option value="account">Account Inquiry</option>
+                                <option value="transfer">Transfer Issue</option>
+                                <option value="loan">Loan Inquiry</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <p id="categoryError" class="text-red-500 text-xs mt-1 hidden">Please select a category.</p>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Your Message</label>
+                            <textarea id="message" name="message" rows="6" required
+                                      class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                      placeholder="Describe your issue or question in detail..."></textarea>
+                            <p id="messageError" class="text-red-500 text-xs mt-1 hidden">Please enter your message.</p>
+                        </div>
+                        <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all-fast">
+                            Submit Request
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Success/Error Message Box (reused from previous pages) -->
+                <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center hidden z-50">
+                    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4 text-center">
+                        <h3 id="messageTitle" class="text-2xl font-bold text-gray-800 mb-4"></h3>
+                        <p id="messageText" class="text-gray-700 mb-6"></p>
+                        <button id="closeMessage" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all-fast">
+                            Close
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle script (reused)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const sidebar = document.querySelector('aside'); 
+
+        if (mobileMenuButton && mobileMenu && sidebar) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('flex');
+            });
+        }
+
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    sidebar.classList.add('hidden');
+                    sidebar.classList.remove('flex');
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('flex');
+                mobileMenu.classList.add('hidden');
+            } else {
+                if (!mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                     sidebar.classList.add('hidden');
+                     sidebar.classList.remove('flex');
+                }
+            }
+        });
+
+        // --- Support Page Specific JavaScript ---
+
+        // FAQ Accordion Logic
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const arrowIcon = question.querySelector('.arrow-icon');
+
+                // Close other open answers
+                document.querySelectorAll('.faq-question.active').forEach(activeQuestion => {
+                    if (activeQuestion !== question) {
+                        activeQuestion.classList.remove('active');
+                        activeQuestion.nextElementSibling.style.display = 'none';
+                        activeQuestion.querySelector('.arrow-icon').classList.remove('active');
+                    }
+                });
+
+                // Toggle current answer
+                question.classList.toggle('active');
+                arrowIcon.classList.toggle('active');
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                } else {
+                    answer.style.display = 'block';
+                }
+            });
+        });
+
+        // Support Form Submission Logic
+        const supportForm = document.getElementById('supportForm');
+        const subjectInput = document.getElementById('subject');
+        const categorySelect = document.getElementById('category');
+        const messageTextarea = document.getElementById('message');
+
+        const subjectError = document.getElementById('subjectError');
+        const categoryError = document.getElementById('categoryError');
+        const messageError = document.getElementById('messageError');
+
+        const messageBox = document.getElementById('messageBox'); // Already defined above for general use
+        const messageTitle = document.getElementById('messageTitle');
+        const messageText = document.getElementById('messageText');
+        const closeMessageBtn = document.getElementById('closeMessage');
+
+        supportForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Hide all error messages initially
+            [subjectError, categoryError, messageError].forEach(el => el.classList.add('hidden'));
+
+            let isValid = true;
+
+            // Validate Subject
+            if (!subjectInput.value.trim()) {
+                subjectError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Category
+            if (!categorySelect.value) {
+                categoryError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // Validate Message
+            if (!messageTextarea.value.trim()) {
+                messageError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const formData = {
+                    subject: subjectInput.value.trim(),
+                    category: categorySelect.value,
+                    message: messageTextarea.value.trim()
+                };
+                console.log('Support request submitted:', formData);
+                
+                // Simulate success and show message box
+                showMessage('Request Submitted!', 'Your support request has been successfully submitted. We will get back to you shortly.', 'success');
+                
+                // In a real application, you would send this to a backend
+                // fetch('/api/submit-support-ticket', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(formData)
+                // })
+                // .then(response => { /* handle response */ })
+                // .catch(error => { /* handle error and show error message */ });
+
+                supportForm.reset(); // Clear form after submission
+            }
+        });
+
+        // Re-define showMessage for clarity (if not already defined globally)
+        function showMessage(title, text, type = 'success') {
+            messageTitle.textContent = title;
+            messageText.textContent = text;
+            messageTitle.classList.remove('text-green-700', 'text-red-700');
+            messageText.classList.remove('text-green-700', 'text-red-700');
+
+            if (type === 'success') {
+                messageTitle.classList.add('text-green-700');
+                messageText.classList.add('text-green-700');
+            } else if (type === 'error') {
+                messageTitle.classList.add('text-red-700');
+                messageText.classList.add('text-red-700');
+            }
+            messageBox.classList.remove('hidden');
+        }
+
+        closeMessageBtn.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+        });
+
+    </script>
+</body>
+</html>
