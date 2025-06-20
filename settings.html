@@ -86,112 +86,77 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-
-        /* Dark mode overrides for settings card */
-        html.dark .settings-card {
-            background-color: #1f2937; /* Darker gray for cards in dark mode */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        html.dark .settings-card h3,
-        html.dark .settings-card p,
-        html.dark .settings-card label,
-        html.dark .settings-card span {
-            color: #d1d5db; /* Light gray text for dark mode */
-        }
-        html.dark .input-field-style,
-        html.dark .select-field-style {
-            background-color: #374151; /* Darker input fields */
-            border-color: #4b5563; /* Darker border */
-            color: #f3f4f6; /* Lighter text in inputs */
-        }
-        html.dark .select-field-style {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239ca3af'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e"); /* Lighter arrow for dark mode select */
-        }
-        html.dark .text-gray-500 {
-            color: #9ca3af; /* Lighter gray for hints */
-        }
-        html.dark .text-gray-700 {
-            color: #d1d5db; /* Lighter gray for labels */
-        }
-        html.dark .text-gray-800 {
-            color: #f3f4f6; /* Lighter gray for headings */
-        }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
     <div class="flex-1 flex flex-col w-full overflow-hidden">
- <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
-    
-    <div class="order-1 sm:order-none">
-      <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
-        <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
-        </svg>
-        <div class="hidden sm:flex items-center font-medium">
-          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
-          </svg>
-            Dashboard
-        </div>
-      </a>
-    </div>
+        <header class="bg-white shadow-sm p-4 flex flex-col sm:flex-row sm:items-center justify-between z-10 space-y-3 sm:space-y-0">
+            <div class="order-1 sm:order-none">
+                <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 transition-all-fast">
+                    <svg class="w-6 h-6 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+                    </svg>
+                    <div class="hidden sm:flex items-center font-medium">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+                        </svg>
+                        Dashboard
+                    </div>
+                </a>
+            </div>
 
-    <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
-      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
-        Settings
-      </h1>
-      
-    </div>
+            <div class="order-2 sm:order-none w-full sm:w-auto flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+                <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 text-center sm:text-left w-full">
+                    Settings
+                </h1>
+            </div>
 
-    <div class="order-3">
-      <a href="recentalerts.html">
-  <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
-    </svg>
-  </button>
-</a>
-    </div>
+            <div class="order-3">
+                <a href="recentalerts.html">
+                    <button class="text-gray-600 hover:text-gray-800 focus:outline-none rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all-fast shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"/>
+                        </svg>
+                    </button>
+                </a>
+            </div>
+        </header>
 
-  </header>
-
-
-
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 p-6 main-content-area">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 main-content-area">
             <div class="max-w-4xl mx-auto">
-                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Personalize Your Experience</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Personalize Your Experience</h2>
 
                 <div class="settings-card">
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.58.353 1.258.6 2.573 1.066z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         General Settings
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="displayName" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Display Name</label>
+                            <label for="displayName" class="block text-gray-700 text-sm font-medium mb-2">Display Name</label>
                             <input type="text" id="displayName" name="displayName" class="input-field-style" value="John Doe">
                         </div>
                         <div>
-                            <label for="email" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Email Address</label>
+                            <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
                             <input type="email" id="email" name="email" class="input-field-style" value="johndoe@example.com" disabled>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Contact support to change email.</p>
+                            <p class="text-xs text-gray-500 mt-1">Contact support to change email.</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="themeSelect" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Theme</label>
+                            <label for="themeSelect" class="block text-gray-700 text-sm font-medium mb-2">Theme</label>
                             <select id="themeSelect" name="theme" class="select-field-style">
                                 <option value="default">System Default</option>
                                 <option value="light">Light</option>
-                                <option value="dark">Dark</option>
+                                <option value="Dark">Dark</option>
                             </select>
                         </div>
                         <div>
-                            <label for="language" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Language</label>
+                            <label for="language" class="block text-gray-700 text-sm font-medium mb-2">Language</label>
                             <select id="language" name="language" class="select-field-style">
                                 <option value="en">English</option>
                                 <option value="es">Spanish</option>
@@ -207,26 +172,26 @@
                 </div>
 
                 <div class="settings-card">
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2v5a2 2 0 01-2 2h-3a2 2 0 01-2-2V9a2 2 0 012-2h3zm0 0V5a2 2 0 00-2-2h-3a2 2 0 00-2 2v2m7 14l-3-3m0 0l-3 3m3-3v3m2-14H8a2 2 0 00-2 2v9a2 2 0 002 2h7a2 2 0 002-2V9a2 2 0 00-2-2z"></path></svg>
                         Security Settings
                     </h3>
                     <div class="mb-4">
-                        <label for="currentPassword" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Current Password</label>
+                        <label for="currentPassword" class="block text-gray-700 text-sm font-medium mb-2">Current Password</label>
                         <input type="password" id="currentPassword" name="currentPassword" class="input-field-style" placeholder="Enter current password">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="newPassword" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">New Password</label>
+                            <label for="newPassword" class="block text-gray-700 text-sm font-medium mb-2">New Password</label>
                             <input type="password" id="newPassword" name="newPassword" class="input-field-style" placeholder="Enter new password">
                         </div>
                         <div>
-                            <label for="confirmNewPassword" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Confirm New Password</label>
+                            <label for="confirmNewPassword" class="block text-gray-700 text-sm font-medium mb-2">Confirm New Password</label>
                             <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="input-field-style" placeholder="Confirm new password">
                         </div>
                     </div>
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Two-Factor Authentication (2FA)</span>
+                        <span class="text-gray-700 text-sm font-medium">Two-Factor Authentication (2FA)</span>
                         <label class="toggle-switch-container">
                             <input type="checkbox" id="2faToggle">
                             <span class="toggle-slider"></span>
@@ -240,37 +205,37 @@
                 </div>
 
                 <div class="settings-card">
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1m6-10V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-3 3H9a3 3 0 01-3-3v-1"></path></svg>
                         Notification Preferences
                     </h3>
                     <div class="mb-4">
-                        <p class="text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Email Notifications</p>
+                        <p class="text-gray-700 text-sm font-medium mb-2">Email Notifications</p>
                         <div class="flex flex-col space-y-2">
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded" checked>
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Account Activity Alerts</span>
+                                <span class="ml-2 text-gray-700">Account Activity Alerts</span>
                             </label>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded" checked>
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Promotions & Offers</span>
+                                <span class="ml-2 text-gray-700">Promotions & Offers</span>
                             </label>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded">
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Security Advisories</span>
+                                <span class="ml-2 text-gray-700">Security Advisories</span>
                             </label>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <p class="text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">SMS Notifications</p>
+                        <p class="text-gray-700 text-sm font-medium mb-2">SMS Notifications</p>
                         <div class="flex flex-col space-y-2">
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded" checked>
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Large Transaction Alerts</span>
+                                <span class="ml-2 text-gray-700">Large Transaction Alerts</span>
                             </label>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded">
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Balance Updates</span>
+                                <span class="ml-2 text-gray-700">Balance Updates</span>
                             </label>
                         </div>
                     </div>
@@ -282,20 +247,20 @@
                 </div>
 
                 <div class="settings-card">
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z"></path></svg>
                         Privacy Settings
                     </h3>
                     <div class="mb-4">
-                        <p class="text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Data Sharing</p>
+                        <p class="text-gray-700 text-sm font-medium mb-2">Data Sharing</p>
                         <div class="flex flex-col space-y-2">
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded">
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Share anonymous data for product improvement</span>
+                                <span class="ml-2 text-gray-700">Share anonymous data for product improvement</span>
                             </label>
                             <label class="inline-flex items-center">
                                 <input type="checkbox" class="form-checkbox text-blue-600 h-5 w-5 rounded" checked>
-                                <span class="ml-2 text-gray-700 dark:text-gray-300">Allow personalized offers based on my activity</span>
+                                <span class="ml-2 text-gray-700">Allow personalized offers based on my activity</span>
                             </label>
                         </div>
                     </div>
@@ -307,11 +272,11 @@
                 </div>
 
                 <div class="settings-card border-l-4 border-red-500">
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                         <svg class="w-6 h-6 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         Account Management
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">You can permanently close your account. This action cannot be undone.</p>
+                    <p class="text-gray-600 mb-4">You can permanently close your account. This action cannot be undone.</p>
                     <div class="flex justify-end mt-6">
                         <button class="bg-gray-200 hover:bg-gray-300 text-red-700 font-bold py-2 px-4 rounded-lg shadow-md transition-all-fast">
                             Request Data Export
@@ -327,7 +292,6 @@
     </div>
 
     <script>
-
         // Example: Toggling 2FA (client-side visual only)
         const twoFaToggle = document.getElementById('2faToggle');
         if (twoFaToggle) {
